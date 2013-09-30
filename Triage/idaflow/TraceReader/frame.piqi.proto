@@ -1,0 +1,122 @@
+
+message frame {
+    optional std_frame std_frame = 1;
+    optional syscall_frame syscall_frame = 2;
+    optional exception_frame exception_frame = 3;
+    optional taint_intro_frame taint_intro_frame = 4;
+    optional modload_frame modload_frame = 5;
+    optional key_frame key_frame = 6;
+}
+
+message operand_list {
+    repeated operand_info elem = 1;
+}
+
+message operand_info {
+    required operand_info_specific operand_info_specific = 1;
+    required sint32 bit_length = 2;
+    required operand_usage operand_usage = 3;
+    required taint_info taint_info = 4;
+    required bytes value = 5;
+}
+
+message operand_info_specific {
+    optional mem_operand mem_operand = 1;
+    optional reg_operand reg_operand = 2;
+}
+
+message reg_operand {
+    required string name = 1;
+}
+
+message mem_operand {
+    required uint64 address = 1;
+}
+
+message operand_usage {
+    required bool read = 1;
+    required bool written = 2;
+    required bool index = 3;
+    required bool base = 4;
+}
+
+message taint_info {
+    optional bool no_taint = 1;
+    optional uint64 taint_id = 2;
+    optional bool taint_multiple = 3;
+}
+
+message std_frame {
+    required uint64 address = 1;
+    required uint64 thread_id = 2;
+    required bytes rawbytes = 3;
+    required operand_list operand_list = 4;
+}
+
+message syscall_frame {
+    required uint64 address = 1;
+    required uint64 thread_id = 2;
+    required uint64 number = 3;
+    required argument_list argument_list = 4;
+}
+
+message argument_list {
+    repeated sint64 elem = 1;
+}
+
+message exception_frame {
+    required uint64 exception_number = 1;
+    optional uint64 thread_id = 2;
+    optional uint64 from_addr = 3;
+    optional uint64 to_addr = 4;
+}
+
+message taint_intro_frame {
+    required taint_intro_list taint_intro_list = 1;
+}
+
+message taint_intro_list {
+    repeated taint_intro elem = 1;
+}
+
+message taint_intro {
+    required uint64 addr = 1;
+    required uint64 taint_id = 2;
+    optional bytes value = 3;
+}
+
+message modload_frame {
+    required string module_name = 1;
+    required uint64 low_address = 2;
+    required uint64 high_address = 3;
+}
+
+message key_frame {
+    required tagged_value_lists tagged_value_lists = 1;
+}
+
+message tagged_value_lists {
+    repeated tagged_value_list elem = 1;
+}
+
+message tagged_value_list {
+    required value_source_tag value_source_tag = 1;
+    required value_list value_list = 2;
+}
+
+message value_source_tag {
+    optional bool no_thread_id = 1;
+    optional uint64 thread_id = 2;
+}
+
+message value_list {
+    repeated value_info elem = 1;
+}
+
+message value_info {
+    required operand_info_specific operand_info_specific = 1;
+    required sint32 bit_length = 2;
+    optional taint_info taint_info = 3;
+    required bytes value = 4;
+}
+

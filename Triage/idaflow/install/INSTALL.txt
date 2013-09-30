@@ -1,0 +1,7 @@
+You need Python 2.7 (32-bit) and IDA 6.x (32-bit) to use these scripts. 
+This install has been tested on XP, Win7, Win8 with IDA 6.4. 
+
+Extract the included windows pyside 2.7 executables in your python 2.7 install directory 
+
+Follow the instructions in C:\moflow\Triage\IDAFlow\install\protobuf-2.5.0\python\README.txt 
+to install protobuf python extensions (this does not require a compiler so skip that section)

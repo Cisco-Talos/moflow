@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>934</width>
+    <height>380</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QPlainTextEdit" name="BIL_plainTextEdit">
+   <property name="geometry">
+    <rect>
+     <x>387</x>
+     <y>9</y>
+     <width>541</width>
+     <height>361</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="taintedBlocks_listWidget">
+   <property name="geometry">
+    <rect>
+     <x>135</x>
+     <y>73</y>
+     <width>120</width>
+     <height>298</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>120</width>
+     <height>16777215</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="taintedInstructions_listWidget">
+   <property name="geometry">
+    <rect>
+     <x>261</x>
+     <y>73</y>
+     <width>120</width>
+     <height>298</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>120</width>
+     <height>16777215</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>261</x>
+     <y>54</y>
+     <width>95</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Tainted Instructions</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>54</y>
+     <width>84</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Tainted Functions</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>135</x>
+     <y>54</y>
+     <width>67</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Tainted Blocks</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>44</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>BapTrace</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="BapTrace_lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>28</y>
+     <width>371</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Click to open...</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="taintedFuncs_listWidget">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>73</y>
+     <width>120</width>
+     <height>298</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>120</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
