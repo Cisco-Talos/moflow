@@ -1,0 +1,33 @@
+TRACE_DIR=..\..
+PROTODIR=$(TRACE_DIR)\protobuf
+CXXFLAGS = /nologo /MT /O2 /EHsc -I./pb -I$(PROTODIR)/src -I$(TRACE_DIR)/src/common
+#CXXFLAGS += -m32
+LDFLAGS =
+
+CXX = cl
+LD = lib
+RM = del /F
+
+OBJS = pb\frame.piqi.pb.obj trace.container.obj
+
+LIBPROTOBUF=$(TRACE_DIR)/protobuf/vsprojects/Release/libprotobuf.lib
+
+all: libtrace.a
+
+.PHONY: clean
+clean:
+	$(RM) $(OBJS)
+	
+%.obj : %.cc
+	$(CXX) $(CXXFLAGS) /c $< /Fo$@
+
+%.obj : %.cpp
+	$(CXX) $(CXXFLAGS) /c $< /Fo$@
+	
+pb/frame.piqi.pb.c : pb/frame.piqi.pb.h ;
+	
+$(LIBPROTOBUF) :
+	MSBuild $(PROTODIR)\vsprojects\protobuf.sln /p:Configuration=Release /target:libprotobuf
+	
+libtrace.a: pb/frame.piqi.pb.obj trace.container.obj $(LIBPROTOBUF) 
+	$(LD) $(LDFLAGS) $+ $(LOADLIBES) $(LDLIBS) /out:$@

@@ -1,0 +1,6 @@
+This program was used for bootstrapping .proto to .piqi converter, which is now
+available as "piqi of-proto" command.
+
+Essentially it was used for converting
+"protobuf-2.3.0/src/google/protobuf/descriptor.proto" to
+"$PIQI_ROOT/piqi/desriptor.piqi".

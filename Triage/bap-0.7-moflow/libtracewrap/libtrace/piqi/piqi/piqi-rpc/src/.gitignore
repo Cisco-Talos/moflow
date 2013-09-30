@@ -1,0 +1,9 @@
+dialyzer_plt
+dialyzer.log
+
+piqi-rpc.piqi
+
+piqi_rpc_piqi.erl
+piqi_rpc_piqi.hrl
+
+piqi_rpc.app

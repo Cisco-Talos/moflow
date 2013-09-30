@@ -1,0 +1,113 @@
+This file contains general instructions for building Piqi from source code.
+
+The following files contain more specific information:
+
+        INSTALL.erlang -- building and installing Piqi for Erlang
+
+        INSTALL.ocaml -- building and installing Piqi for OCaml
+
+        piqi-rpc/README -- building and installing Piqi-RPC
+
+        INSTALL.windows -- building Piqi on Windows
+
+
+SUPPORTED PLATFORMS
+===================
+
+Piqi has been tested on Linux (Debian Lenny and Squeeze, i386 and amd64
+architectures) and on Mac OS X 10.6.4. It is also known to work on Windows and
+Solaris.
+
+Piqi is written in OCaml so, in theory, it should work on platforms and hardware
+architectures supported by OCaml. See the list of supported platforms at:
+
+        http://caml.inria.fr/ocaml/portability.en.html
+
+The rest of this file describes the process of building Piqi on Unix platforms.
+
+
+PREREQUISITES
+=============
+
+On Debian (>= Squeeze):
+
+        apt-get install ocaml camlp4-extra ocaml-findlib gcc make sed
+
+
+On Mac OS X (using Homebrew):
+
+        brew install objective-caml opam
+        opam init
+        eval `opam config env`
+        opam install ocamlfind
+
+        (Here, we used [OPAM](http://opam.ocamlpro.com/) to build and install
+        ocamlfind).
+
+
+On other Unix systems:
+
+        * OCaml compiler and standard library
+
+                Recommended (tested) versions are 3.11.2 and 3.12.0. Older OCaml
+                versions >= 3.10 may work as well.
+
+                OCaml is available in most Linux distributions. It can also be
+                downloaded from here:
+
+                        http://caml.inria.fr/download.en.html
+
+        * CamlP4 -- Caml Preprocessor and Pretty Printer
+
+                It comes as a part of OCaml source distribution. It should be
+                prepackaged in major Linux distributions as well.
+
+        * Ocamlfind/Findlib -- library manager for OCaml
+
+                If installed separately form prepackaged OCaml distribution, it
+                is recommended to build it from sources after you build/install
+                OCaml. It can be downloaded from here:
+
+                        http://projects.camlcity.org/projects/findlib.html
+        * C compiler
+
+                GCC works. Other compilers should work if they are able to build
+                OCaml.
+
+        * GNU make, sed and probably some other tools.
+
+
+INSTALLATION INSTRUCTIONS
+=========================
+
+1. Run ./configure
+
+        Run "./configure --help" for the list of available options.
+
+2. Build third-party dependencies
+
+        make deps
+
+3. Build Piqi
+
+        make
+
+4. Install "piqi" and "piqic" binaries (optional)
+
+        make install
+
+
+RUNNING TESTS
+=============
+
+1. Prepare the environment
+
+        . setenv.sh
+
+2. Run the tests
+
+        cd tests; make
+
+
+See tests/README for further information.
+

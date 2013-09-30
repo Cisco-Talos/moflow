@@ -1,0 +1,5 @@
+*.beam
+
+*_piqi*.erl
+*_piqi*.hrl
+

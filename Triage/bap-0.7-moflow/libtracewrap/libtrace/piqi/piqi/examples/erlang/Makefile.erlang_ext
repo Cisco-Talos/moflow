@@ -1,0 +1,37 @@
+
+ERL_SOURCES = \
+	$(PIQI_ERL_FILES) \
+	io_json_xml_pb.erl \
+
+
+
+ERL_APP_PATH = $(PIQI_ROOT)/piqi-erlang
+ERLC_FLAGS =
+EBIN_DIR = .
+
+
+PIQIC = piqic-erlang-ext
+PIQIC_FLAGS = --gen-defaults
+
+
+PIQI_FILES = addressbook.proto.piqi
+
+PIQI_ERL_FILES = addressbook_piqi.erl addressbook_piqi_ext.erl
+PIQI_HRL_FILES = addressbook_piqi.hrl
+
+
+PRE_TARGET = $(PIQI_ERL_FILES) $(PIQI_HRL_FILES)
+
+
+all: ebin
+
+
+$(PIQI_ERL_FILES) $(PIQI_HRL_FILES): $(PIQI_FILES)
+	set -e; \
+	for i in $^; do \
+		$(PIQIC) $(PIQIC_FLAGS) $$i; \
+	done
+
+
+include $(PIQI_ROOT)/make/Makefile.erlang
+

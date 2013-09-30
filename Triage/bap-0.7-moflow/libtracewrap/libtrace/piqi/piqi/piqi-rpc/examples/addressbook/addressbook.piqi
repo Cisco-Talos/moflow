@@ -1,0 +1,43 @@
+.import [ .module person ]
+
+
+.erlang-type-prefix ""
+
+
+.function [
+    .name add-person
+
+    .input person/person
+
+    .error string
+]
+
+
+.function [
+    .name get-person
+    
+    .input [
+        .field [
+            .name id
+            .type int
+        ]
+    ]
+
+    .output person/person
+
+    .error string
+]
+
+
+.function [
+    .name list-people
+    
+    .output addressbook
+]
+
+
+.list [
+    .name addressbook
+    .type person/person
+]
+

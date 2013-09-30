@@ -1,0 +1,62 @@
+.include [
+         .module types
+]
+
+.include [
+         .module stdframe
+]
+
+.include [
+         .module syscallframe
+]
+
+.include [
+         .module exceptionframe
+]
+
+.include [
+         .module taintintroframe
+]
+
+.include [
+         .module modloadframe
+]
+
+.include [
+         .module keyframe
+]
+
+% Holder of any type of frame
+.variant [
+         .name frame
+
+         .option [
+                 .type std-frame
+                 .code 1
+         ]
+
+         .option [
+                 .type syscall-frame
+                 .code 2
+         ]
+
+         .option [
+                 .type exception-frame
+                 .code 3
+         ]
+
+         .option [
+                 .type taint-intro-frame
+                 .code 4
+         ]
+
+         .option [
+                 .type modload-frame
+                 .code 5
+         ]
+
+         .option [
+                 .type key-frame
+                 .code 6
+         ]
+]

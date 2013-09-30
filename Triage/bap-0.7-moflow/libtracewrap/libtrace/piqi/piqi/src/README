@@ -1,0 +1,6 @@
+We need this directory to be able to treat the main Piqi repository as a
+"piqi_src" rebar dependency for the "piqi-erlang" rebar package, which is
+located at:
+
+        https://github.com/alavrik/piqi-erlang
+

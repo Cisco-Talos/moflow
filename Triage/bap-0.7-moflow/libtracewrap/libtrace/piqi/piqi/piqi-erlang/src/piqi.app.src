@@ -1,0 +1,22 @@
+{application, piqi,
+ [{description, "Piqi Library"},
+  {vsn, git},
+  {modules, [
+        piqirun, piqirun_ext,
+        piqi, piqi_app, piqi_sup,
+        piqi_tools,
+        piqi_piqi, piqi_rpc_piqi, piqi_tools_piqi,
+        piqic_erlang_ext,
+        piqirun_tests
+        ]},
+  {registered, [piqi_tools, piqi_sup]},
+  {applications, [kernel, stdlib]},
+  {mod, {piqi_app, []}},
+  {env, [
+
+        % The number of "piqi server" instances that perform "convert" and other
+        % Piqi tools requests
+        {worker_pool_size, 1}
+
+        ]}
+ ]}.

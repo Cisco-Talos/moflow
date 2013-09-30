@@ -1,0 +1,14 @@
+
+ERL_SOURCES = piqi_piqi.erl piqobj_piqi.erl test.erl
+
+
+ERL_APP_PATH = $(PIQI_ROOT)/piqi-erlang
+ERLC_FLAGS = -I .
+EBIN_DIR = .
+
+
+all: ebin
+
+
+include $(PIQI_ROOT)/make/Makefile.erlang
+

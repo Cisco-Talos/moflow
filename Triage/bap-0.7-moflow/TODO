@@ -1,0 +1,20 @@
+Missing features:
+* CFG Recovery
+
+Disassembly stuff:
+* Include symbols in disassembly
+* Include section names in disassembly
+* Include data?
+
+Design issues:
+* Change attributes from attribute list to a set of attribute.
+* When optimizing code, try to keep the more meaningful variable names.
+* How should we represent functions?
+
+Other:
+* Fix up documentation.
+* Write more .mli files.
+* Redo the patched VEX thing properly. (using a vendor branch)
+
+Bigger projects:
+* Add support for AMD64 binaries. (after completing the previous item)

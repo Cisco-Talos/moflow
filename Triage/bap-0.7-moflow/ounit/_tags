@@ -1,0 +1,34 @@
+# OASIS_START
+# DO NOT EDIT (digest: 952340aed2c8f8e3f857f8ab2e3228e7)
+# Ignore VCS directories, you can use the same kind of rule outside 
+# OASIS_START/STOP if you want to exclude directories that contains 
+# useless stuff for the build process
+<**/.svn>: -traverse
+<**/.svn>: not_hygienic
+".bzr": -traverse
+".bzr": not_hygienic
+".hg": -traverse
+".hg": not_hygienic
+".git": -traverse
+".git": not_hygienic
+"_darcs": -traverse
+"_darcs": not_hygienic
+# Library oUnit
+"src/oUnit.cmxs": use_oUnit
+<src/oUnit.{cma,cmxa}>: oasis_library_ounit_byte
+<src/*.ml{,i}>: oasis_library_ounit_byte
+<src/oUnit.{cma,cmxa}>: oasis_library_ounit_native
+<src/*.ml{,i}>: oasis_library_ounit_native
+<src/*.ml{,i}>: pkg_unix
+# Executable test
+"test/test.byte": use_oUnit
+"test/test.byte": pkg_unix
+<test/*.ml{,i}>: use_oUnit
+<test/*.ml{,i}>: pkg_unix
+# OASIS_STOP
+"src/oUnit.ml": syntax_camlp4o, pkg_camlp4.macro
+"src/oUnit.odoc": oasis_document_api_ounit
+"src/oUnit.ml": oasis_document_api_ounit
+"src/api-ounit.docdir": oasis_document_api_ounit
+"build": -traverse
+"build": not_hygienic

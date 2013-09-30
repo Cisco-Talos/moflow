@@ -1,0 +1,7 @@
+#!/bin/sh
+
+RUN="test run"
+ERL_PATH=$PIQI_ROOT/piqi-erlang/ebin
+
+erl -pz $ERL_PATH -noshell -run $RUN -s erlang halt
+

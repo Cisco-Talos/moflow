@@ -1,0 +1,21 @@
+% This is an extension for addressbook.proto.piqi module.
+%
+% This file will be automatically included by "piqic erlang" when it loads
+% addressbook.proto.piqi
+%
+% After converting addressbook.proto to addressbook.proto.piqi, we extend the
+% Piqi module with "erlang-type-prefix" top-level property.
+%
+% If we didn't do that, all Erlang types and records would be prefixed with
+% "addressbook_". Such prefixing is done by default to avoid type and record
+% name conflicts across several modules. We don't need prefixes at all for this
+% simple example.
+
+.include [ .module addressbook ]
+
+
+.erlang-type-prefix ""
+
+
+.custom-field erlang-type-prefix
+

@@ -1,0 +1,25 @@
++------------------------------------+
+| Easy_format: indentation made easy |
++------------------------------------+
+
+
+1. Documentation: http://martin.jambon.free.fr/easy-format.html
+
+2. Installation:
+
+Installation requires ocamlfind:
+
+  make
+  make install
+
+Uninstallation:
+
+  make uninstall
+
+
+3. Examples
+
+Some examples can be run with 'make test' before installing.
+
+More examples that require Easy-format to be installed and possibly
+dependencies on other packages can be found in the examples/ subdirectory.

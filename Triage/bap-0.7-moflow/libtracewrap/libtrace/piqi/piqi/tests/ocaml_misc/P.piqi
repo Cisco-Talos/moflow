@@ -1,0 +1,23 @@
+.ocaml-module "P"
+
+.import [
+    .module Ad
+    .ocaml-name "Common_ad"
+]
+
+.variant [
+    .name reply
+    .option [
+        .name page
+        .type Ad/id
+    ]
+]
+
+.variant [
+    .name voidvarianttosolvepiqibug
+    .option [
+        .name bad
+        .type int
+    ]
+]
+

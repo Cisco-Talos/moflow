@@ -1,0 +1,56 @@
+#!/bin/sh
+
+set -e
+#set -x
+
+
+# make sure this variable is defined; it means that this script is called from
+# OCamlMakefile
+test "$OCAMLFIND"
+
+# make sure that we get an initial library name and a piqi library names as the
+# first and the second arguments
+test "$1"
+test "$2"
+
+# piqi lib installation directory
+BASE=`$OCAMLFIND printconf destdir`
+
+# create a pointing from the piqi library to the initial library
+rm -rf "$BASE/$2"
+ln -s "$BASE/$1" "$BASE/$2"
+
+
+DEST="$BASE/piqi"
+
+# pieces to put there
+PARTS="syntax runtime lib"
+
+
+# remove an old piqi lib installation directory
+rm -rf "$DEST"
+
+# create a new one
+mkdir -p "$DEST"
+
+echo "version = \"`cat $PIQI_ROOT/VERSION`\"" > "$DEST/META"
+echo "description = \"Piqi - data serialization system\"" >> "$DEST/META"
+echo >> "$DEST/META"
+
+for d in $PARTS
+do
+        test -d "$BASE/$d" || continue
+
+        # copy files from other directories to the piqi directory
+        for f in `ls "$BASE/$d" | grep -v META`
+        do
+                cp -p "$BASE/$d/$f" "$DEST"
+        done
+
+        # create the combined META
+        echo "package \"$d\" (" >> "$DEST/META"
+        cat "$BASE/$d/META" | sed -e 's/^/  /' >> "$DEST/META"
+        echo ")" >> "$DEST/META"
+        echo >> "$DEST/META"
+done
+

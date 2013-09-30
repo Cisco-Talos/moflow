@@ -1,0 +1,164 @@
+.alias [
+       .name thread-id
+       .type uint64
+]
+
+.alias [
+       .name address
+       .type uint64
+]
+
+.alias [
+       .name bit-length
+       .type int
+]
+
+.alias [
+       .name taint-id
+       .type uint64
+]
+
+.alias [
+       .name exception-number
+       .type uint64
+]
+
+%
+% Operand stuff shared between key-frame and std-frame
+%
+
+% Operand list
+.list [
+      .name operand-list
+      .type operand-info
+]
+
+% Operand
+.record [
+        .name operand-info
+
+        % Mem/register specific stuff.
+        .field [
+               .type operand-info-specific
+               .code 1
+        ]
+
+
+        % Size in bits
+        .field [
+               .type bit-length
+               .code 2
+        ]
+
+        % Usage (read, written, both)
+        .field [
+               .type operand-usage
+               .code 3
+        ]
+
+        % Taint information
+        .field [
+               .type taint-info
+               .code 4
+        ]
+
+        % Value
+        .field [
+               .name value
+               .type binary
+               .code 5
+        ]
+]
+
+% Memory/register specific part of operand
+.variant [
+         .name operand-info-specific
+
+         .option [
+                 .type mem-operand
+                 .code 1
+         ]
+
+         .option [
+                 .type reg-operand
+                 .code 2
+         ]
+]
+
+% Represent a register operand value
+.record [
+        .name reg-operand
+        % Register name
+        .field [
+               .name name
+               .type string
+               .code 1
+        ]
+]
+
+% Represent a memory operand value
+.record [
+        .name mem-operand
+
+        % Address
+        .field [
+               .type address
+               .code 1
+        ]
+]
+
+% Operand usage
+.record [
+      .name operand-usage
+
+      % Is this operand read during this instruction?
+      .field [
+             .name read
+             .type bool
+             .code 1
+      ]
+
+      % Is this operand written to?
+      .field [
+             .name written
+             .type bool
+             .code 2
+      ]
+
+      % Is this operand used as the index of a memory lookup?
+      .field [
+             .name index
+             .type bool
+             .code 3
+      ]
+
+      % Is this operand used as the base of a memory lookup?
+      .field [
+             .name base
+             .type bool
+             .code 4
+      ]
+]
+
+% Taint information
+.variant [
+         .name taint-info
+
+         % Operand not tainted
+         .option [
+                 .name no-taint
+                 .code 1
+         ]
+
+         % Taint from a single source
+         .option [
+                 .type taint-id
+                 .code 2
+         ]
+
+         % Taint from more than one source
+         .option [
+                 .name taint-multiple
+                 .code 3
+         ]
+]

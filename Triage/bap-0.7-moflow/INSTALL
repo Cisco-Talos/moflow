@@ -1,0 +1,203 @@
+*** Supported platforms ***
+
+In general, we support Debian Stable, Debian Testing, and Ubuntu.  You
+can probably compile BAP on other distributions, but it might require
+small changes.
+
+*** Basic pre-requisites:
+
+* ocaml 3.12 or newer
+* camlidl
+* camomile
+* bfd
+
+*** Basic installation ****
+
+To build BAP on x86, do the following:
+  $ ./autogen.sh (if building from SVN)
+  $ ./configure
+  $ make
+-- or to make all and run unit tests after --
+  $ make test
+
+Configure should report any dependencies you do not have.
+
+*** Installation on Ubuntu 11.04/11.10/12.04 and Debian squeeze/wheezy ***
+
+Run the following command to install required packages:
+
+  $ sudo apt-get install ocaml ocaml-native-compilers ocaml-findlib camlidl \
+    binutils-dev automake libcamomile-ocaml-dev otags libpcre3-dev          \
+    camlp4-extra bison flex zlib1g-dev libgmp3-dev g++ libtool
+
+On x86_64 also add:
+  $ sudo apt-get install gcc-multilib g++-multilib lib32z1-dev
+
+To build LLVM code generation, include:
+  $ sudo apt-get install libllvm-3.1-ocaml-dev
+We have only tested with llvm version 3.1, but other versions may work too.
+
+To compile the documentation, add:
+  $ sudo aptitude install texlive-base texlive-latex-base \
+    texlive-latex-extra texlive-fonts-recommended
+
+On Debian squeeze, you must also install a new version of OCaml.
+Follow the instructions in "Bootstrapping using ocamlbrew" after
+installing the appropriate packages above.
+
+*** Bootstrapping using ocamlbrew ***
+
+To install ocaml 4.00.1 and opam using ocamlbrew:
+
+  $ curl -kL https://raw.github.com/hcarty/ocamlbrew/master/ocamlbrew-install | env OCAMLBREW_FLAGS="-r" bash
+
+Follow the directions printed on the screen about adding 'source
+<...>' to your ~/.bashrc file to make ocaml available whenever you
+start a shell.  Also run the 'source <...>' line in your shell to make
+ocaml available in your current session.
+
+At this point, running the following command should print version 3.12
+or newer, indicating you are using ocaml from ocamlbrew:
+
+  $ ocaml -version
+
+Next, install the required ocaml packages using opam:
+
+  $ opam install ocamlfind camomile camlidl otags
+
+If you are installing on Debian/Ubuntu and used the above apt-get
+command to install packages, you should be able to build bap normally
+now (./autogen && ./configure && make).
+
+On any other system, you will need to use a special command line that
+tells bap where opam packages are:
+
+  $ ./autogen.sh (if building from SVN)
+  $ CPPFLAGS="-I/opt/local/include/ -I$(opam config var lib)/camlidl" \
+    INCDIRS="$(opam config var lib)/camlidl" \
+    LDFLAGS="-L/opt/local/lib -L/opt/local/lib/x86_64/" \
+    ./configure
+
+After this, run make normally.
+
+*** Installation for Fedora Core 15 ***
+
+Run the following command to install required packages:
+
+  $ sudo yum install ocaml ocaml-ocamlgraph ocaml-findlib  \
+   ocaml-camlidl-devel ocaml-ocamlgraph-devel ocaml-extlib \
+   ocaml-camomile-devel ocaml-camomile-data                \
+   ocaml-camlp4-devel automake binutils-devel gcc-c++
+
+*** Installation for Mac OS X ***
+
+Install macports from https://www.macports.org/install.php
+
+Install required packages using macports:
+
+  $ port install gmp autoconf automake libtool ocaml opam pcre
+  $ port install -s binutils configure.post_args=--enable-targets=i386-elf,i386-pe
+
+Alternatively, install required packages using homebrew:
+
+  $ brew install gmp autoconf automake libtool ocaml opam pcre gettext binutils
+
+Install required opam packages:
+
+  If using opam for the first time:
+  $ opam init
+  Make sure to copy the suggested line to your ~/.profile and execute it.
+
+  $ opam install ocamlfind camlidl camomile otags
+
+And run configure.
+
+  $ ./autogen.sh (if building from SVN)
+
+If using macports:
+  $ CPPFLAGS="-I/opt/local/include/ -I$(opam config var lib)/camlidl" \
+    INCDIRS="$(opam config var lib)/camlidl" \
+    LDFLAGS="-L/opt/local/lib -L/opt/local/lib/x86_64/" \
+    ./configure
+
+If using homebrew:
+  $ CPPFLAGS="-I/usr/local/include/ -I$(opam config var lib)/camlidl" \
+    INCDIRS="$(opam config var lib)/camlidl" \
+    LDFLAGS="-L/usr/local/lib -L/usr/local/lib/x86_64/
+    -L/usr/local/opt/gettext/lib -lintl" \
+    ./configure
+
+*** SMT Solvers ***
+
+BAP interfaces with several SMT solvers which must be downloaded and
+installed separately.  The solver utility must be in the executable
+path to be available to BAP. The supported solvers are:
+ * STP https://sites.google.com/site/stpfastprover/
+ * cvc3 http://www.cs.nyu.edu/acsys/cvc3/
+ * yices2 http://yices.csl.sri.com/
+
+BAP also supports z3 through its native ocaml library, avavilable here:
+http://research.microsoft.com/en-us/um/redmond/projects/z3/download.html
+Once downloaded and extracted, use the BAP configure --with-z3=z3-dir
+option, where z3-dir is the extracted z3 directory.  Note that you must
+run the z3-dir/ocaml/build-lib.sh script before configuring.  The getz3.sh
+script in the solvers directory of the BAP distribution will download,
+extract z3 to solvers/z3, and run the build-lib script for you.  If
+you use this script, you must then pass --with-z3=bap-dir/solvers/z3
+to configure, replacing bap-dir with the path of your BAP directory.
+
+
+*** Installing pin ***
+
+The PIN trace tool is located in the pintraces/ directory. Because of
+licensing reasons, we cannot distribute PIN with the trace tool. PIN
+must be extracted inside of the BAP directory; for instance, if BAP is
+located in $BAPDIR, then PIN should be in $BAPDIR/pin. Running
+./getpin.sh from the $BAPDIR/pintraces directory will automatically
+download and install PIN for Linux; the user is responsible for
+accepting the PIN license agreements. On Windows, PIN must be
+downloaded and extracted by hand. The PIN tool can be built by
+executing make in the $PATH/traces/experiemental directory.  On
+Windows, we reccomend using GNU Make for Windows
+(http://gnuwin32.sourceforge.net/packages/make.htm) and Visual C++
+2010 express
+(http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express).
+After compilation, the PIN tool should exist in
+$PATH/traces/pintraces/obj-ia32/gentrace.so (or gentrace.dll on
+Windows).  See the documentation for more detail.
+
+
+*** Optional: Making the documentation ***
+
+Optionally you can also build the developer documentation by running:
+'make doc' in the ocaml directory.  The documentation will be
+generated under ocaml/doc/bap/.  Note that ocaml documentation
+requires that the ocaml source files be built properly first.
+
+
+*** Optional: Making unit tests ***
+
+Build and run the unit tests tests:
+$ make test
+OR
+
+$ cd tests && make && ./bap_test_suite
+
+For verbose output, pass -verbose to bap_test_suite.
+
+
+*** Optional: Lift arm binaries ***
+
+BAP can lift little endian arm binaries.  For this to work, BAP needs
+to be linked to a version of the BFD library that supports arm.  On
+ubuntu, these are provided by the binutils-multiarch package.
+However, this package does not replace the default BFD libraries
+(which probably do not support arm).  You must also manually run:
+
+  $ cd /usr/lib && sudo rm libbfd.so libopcodes.so \
+  && sudo ln -s libbfd-2.21.0-multiarch.20110327.so libbfd.so \
+  && sudo ln -s libopcodes-2.21.0-multiarch.20110327.so libopcodes.so
+
+to point the default BFD libraries to the multiarch implementations.
+You will probably need to adjust the lib*-multiarch*so filenames to
+match those on your system.

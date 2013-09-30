@@ -1,0 +1,12 @@
+.variant [
+    .name first-variant
+    .option [ .type int ]
+    .option [ .type string ]
+]
+
+.record [
+    .name first-record
+    .field [ .type int ]
+    .field [ .type string ]
+]
+

@@ -1,0 +1,38 @@
+New in BAP 0.7:
+* New function identification heuristics in get_functions for stripped binaries
+* Serialized output formats for easy parsing of BIL outside of BAP
+* Support for ocaml 4.00 (see INSTALL)
+* Support for OS X as a host platform (see INSTALL)
+* New support for streaming symbolic execution of traces
+* New VC framework
+* New VC implementations: FWP and PWP
+* Misc. bug fixes and performance improvements to SMT printers
+* Misc. improvements to x86 lifting
+* Steensgard loop nesting forest algorithm
+* Improved loop unrolling for irreducible loops using Steensgard's algorithm
+
+New in BAP 0.6:
+* General bug fixes to PIN trace tool and trace reading API
+* Major bug fix for PIN tool on Windows that fixes taint analysis
+
+New in BAP 0.5:
+
+* Aggressive dead code elimination
+* New trace format using google protobuf
+* LLVM-based JIT and regular compiler of BAP IL
+* BAP has zero wrong instructions on its x86 nightly tests (but still some unimplemented)
+
+New in BAP :
+
+* Temporaries introduced in SSA can be removed when converting back to the AST.
+* Added constant folding and algebraic simplifications to SCCVN.
+* Added a simple interface in Ssa_simp to apply all safe optimizations easily.
+* Changed REG_{1,8,16,32,64} to Reg of int so there is less special casing.
+* Added Control Dependence Graphs again.
+* Syntax errors now include line numbers.
+* Added memory2array.
+* Makefile now recompiles utils when library changes.
+* Removed unneeded jump instructions when lifting code.
+* Fixed a problem in Cfg_ast.to_prog.
+* Fixed a bug in unsigned division.
+* Temporarily stopped using -pack to work around problems with ocamldebug.

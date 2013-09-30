@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if [ $# -gt 1 ]
+then
+    echo "Usage: $0 [<number of parallel clients>]"
+    exit 1
+fi
+
+
+#BOOT="-boot start_sasl"
+RUN="test main $1"
+ERL_PATH=$PIQI_ROOT/piqi-erlang/ebin
+
+
+erl -pz $ERL_PATH -noshell $BOOT -s piqi start -run $RUN -s erlang halt
+#rlwrap erl -oldshell -pz $ERL_PATH -s piqi_tools start -run $RUN #-s erlang halt
+

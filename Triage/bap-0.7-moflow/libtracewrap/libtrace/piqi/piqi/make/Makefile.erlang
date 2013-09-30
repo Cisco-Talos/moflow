@@ -1,0 +1,78 @@
+
+.SUFFIXES: .erl .beam
+.SECONDARY: .erl
+.PHONY: beams ebin clean dialyzer dialyzer-clean
+
+
+ERLC = erlc
+ERL = erl
+#ERLC_FLAGS = #-W +debug_info +warn_missing_spec
+
+
+ifndef EBIN_DIR
+	EBIN_DIR = ../ebin
+endif
+
+ifndef TEST_DIR
+	TEST_DIR = .
+endif
+
+
+ERL_OBJECTS = $(ERL_SOURCES:%.erl=$(EBIN_DIR)/%.beam)
+EBIN_FILES = $(ERL_OBJECTS) $(ERL_APP_FILE:%.app=$(EBIN_DIR)/%.app)
+ERL_MODULES = $(ERL_SOURCES:%.erl=%)
+
+
+#ERL_PA = $(ERL_APP_PATH:%=-pa %*/ebin)
+ERL_PA = $(ERL_APP_PATH:%=-pa %*/)
+#ERL_INCLUDES = $(ERL_APP_PATH:%=-I %*/)
+ERLC_FLAGS += $(ERL_PA)
+
+
+TEST_PLT=$(TEST_DIR)/dialyzer_plt
+TEST_LOG=$(TEST_DIR)/dialyzer.log
+
+DIALYZER = dialyzer
+DIALYZER_FLAGS += --src --plt $(TEST_PLT) $(ERL_PA) -DNOTEST -DDIALYZER -r .
+#DIALYZER_FLAGS += -Wno_return -Wno_unused -Wunmatched_returns
+
+
+ebin: $(EBIN_DIR) beams $(EBIN_FILES)
+
+
+beams: $(PRE_TARGET) $(ERL_OBJECTS)
+
+
+#$(EBIN_DIR):
+#	mkdir -p $(EBIN_DIR)
+
+
+$(EBIN_DIR)/%.beam: %.erl $(ERL_HEADERS)
+	$(ERLC) $(ERLC_FLAGS) -o $(EBIN_DIR) $<
+
+
+$(EBIN_DIR)/%.app: %.app
+	cp $< $@
+
+
+clean:: dialyzer-clean
+	rm -f $(EBIN_FILES) $(PRE_TARGET)
+
+
+#
+# Dilyzer-releated rules
+#
+
+$(TEST_PLT):
+	mkdir -p $(TEST_DIR)
+	cp $(DIALYZER_PLT) $(TEST_PLT)
+	dialyzer --plt $(TEST_PLT) --add_to_plt
+
+
+dialyzer-clean:
+	rm -f $(TEST_PLT) $(TEST_LOG)
+
+
+dialyzer: beams $(TEST_PLT)
+	$(DIALYZER) $(DIALYZER_FLAGS) | tee $(TEST_LOG)
+

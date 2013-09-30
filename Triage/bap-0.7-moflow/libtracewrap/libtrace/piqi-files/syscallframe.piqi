@@ -1,0 +1,43 @@
+.include [
+         .module types
+]
+
+% Represent a system call
+.record [
+        .name syscall-frame
+
+        % Address of the instruction making the system call
+        .field [
+               .type address
+               .code 1
+        ]
+
+        % Thread that executed the instruction
+        .field [
+               .type thread-id
+               .code 2
+        ]
+
+        % System call number
+        .field [
+               .name number
+               .type uint64
+               .code 3
+        ]
+
+        % System call arguments
+        .field [
+               .type argument-list
+               .code 4
+        ]
+]
+
+.list [
+      .name argument-list
+      .type argument
+]
+
+.alias [
+       .name argument
+       .type int64
+]

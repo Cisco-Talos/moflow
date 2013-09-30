@@ -1,0 +1,64 @@
+#!/bin/sh
+set -ex
+
+f=$1
+
+# some tests reuse this script and pass --no-warnings option as a second
+# parameter; see lines below where $* is expanded
+shift
+
+
+# pretty print to standard output
+piqi pp $f.piqi
+
+
+# check piqi specification
+piqi check $f.piqi
+
+
+# expand piqi: combine all includes into one .piqi file and apply all extensions
+# (prints to stdout by default)
+piqi expand $f.piqi
+
+
+# check piqi light
+piqi light $f.piqi
+
+
+# convert .piqi specification to piq, basically wrapping piqi in a piq object
+piqi convert $f.piqi
+
+
+# convert piqi spec to .pib format
+piqi convert -t pib $f.piqi
+#
+# convert it back to .piq and print to stdout
+piqi convert $* $f.piqi.pib
+
+# Similar to the above but this time, embedding Piqi type specs while
+# converting.
+
+# convert piqi spec to .pib format
+piqi convert --embed-piqi -t pib $f.piqi
+#
+# convert it back to .piq and print to stdout
+piqi convert $* $f.piqi.pib
+
+
+# wrap piqi specification in piq object and convert the object to Protocol
+# Buffer message
+piqi convert -t pb $f.piqi
+
+# convert it back to .piq and print to stdout
+piqi convert --type piqi $* $f.piqi.pb
+
+
+# do the same for json format
+piqi convert -t json $f.piqi
+piqi convert --type piqi $* $f.piqi.json
+
+
+# do the same for xml format
+piqi convert -t xml $f.piqi
+piqi convert --type piqi $* $f.piqi.xml
+

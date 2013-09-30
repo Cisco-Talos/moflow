@@ -1,0 +1,32 @@
+\section{Overview}
+
+The \bap infrastructure is implemented in C++ and OCaml.  The lifting
+and back-end is implemented in OCaml. The C++ portions of BAP
+interface with GNU BFD for parsing executable objects, and GNU
+libopcodes for pretty-printing the disassembly. Each disassembled
+instruction is lifted to the IL by OCaml code, and then passed to the
+back-end.  We interface the C++ front-end with the OCaml back-end
+using OCaml via IDL generated stubs.
+
+
+The \bap top-level directory structure is:
+\begin{itemize}
+\item {\bf libasmir:} This directory contains all the code that
+  interfaces which parses binary file formats.
+
+\item {\bf ocaml:} This directory contains the core \bap library and
+  routines. All the code is written in ocaml. Only core \bap code
+  should go on this directory. If you must modify it in a
+  project-specific way, please make a project-specific branch for
+  those changes.
+
+\item {\bf utils:} This contains user utilities, again written in OCaml.
+
+\item {\bf doc:} The directory containing this documentation.
+\end{itemize}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End: 

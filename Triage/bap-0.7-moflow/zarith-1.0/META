@@ -1,0 +1,5 @@
+description = "Arbitrary precision integers"
+requires = ""
+version = "0.1"
+archive(byte) = "zarith.cma"
+archive(native) = "zarith.cmxa"

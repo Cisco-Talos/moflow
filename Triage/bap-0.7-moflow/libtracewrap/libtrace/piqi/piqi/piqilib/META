@@ -1,0 +1,4 @@
+description = "The Piqi library"
+requires = "ulex easy-format xmlm piqi.runtime"
+archive(byte) = "piqilib.cma"
+archive(native) = "piqilib.cmxa"

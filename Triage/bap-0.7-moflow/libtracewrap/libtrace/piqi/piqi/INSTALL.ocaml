@@ -1,0 +1,49 @@
+This file contains instructions for building Piqi to be used as a data
+serialization system for OCaml.
+
+
+INSTALLING USING OPAM
+=====================
+
+The latest development version of Piqi can be installed using
+[OPAM](http://opam.ocamlpro.com/) in two steps:
+
+1. Add the following repository as a _remote_
+
+        opam remote add piqi git://github.com/alavrik/piqi-opam-repo.git
+
+2. After that, run
+
+        opam install piqi
+
+This command will install the latest development version of Piqi, including
+`piqi` and `piqic` executables and piqi libraries for OCaml.
+
+
+INSTALLING FROM SOURCE CODE
+===========================
+
+1. Follow general build and installation instructions from the INSTALL file.
+
+        If you want Piqi OCaml libraries to be installed to a custom filesystem
+        location, run ./configure with --ocaml-libdir=<DIR>
+
+        This will override ocamlfind setting determined by OCAMLFIND_DESTDIR
+        environment variable or by ocamlfind config. You can run
+        "ocamlfind printconf destdir" to see the current setting.
+
+
+2. Build Piqi runtime libraries for OCaml:
+
+        make ocaml
+
+
+3. Install Piqi runtime libraries for OCaml:
+
+        make ocaml-install
+
+
+To uninstall previously installed libraries:
+
+        make ocaml-uninstall
+

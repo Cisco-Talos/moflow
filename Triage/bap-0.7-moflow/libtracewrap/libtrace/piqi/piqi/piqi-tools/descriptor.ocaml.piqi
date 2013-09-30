@@ -1,0 +1,29 @@
+% OCaml-specific extension of descriptor.proto.piqi (which is converted from
+% descriptor.proto -- see Makefile for details)
+
+.include [ .module descriptor ]
+
+
+.extend [
+    .field descriptor-proto-extension-range.end
+
+    .with.ocaml-name "p_end"
+]
+
+
+.extend [
+    .field field-descriptor-proto.type
+
+    .with.ocaml-name "p_type"
+]
+
+
+.extend [
+    .field service-descriptor-proto.method
+
+    .with.ocaml-name "p_method"
+]
+
+
+.custom-field ocaml-name
+

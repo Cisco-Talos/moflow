@@ -1,0 +1,45 @@
+
+ERL_SOURCES = \
+	$(PIQI_ERL_FILES) \
+	test.erl \
+
+
+
+ERL_APP_PATH = $(PIQI_ROOT)/piqi-erlang
+ERLC_FLAGS =
+EBIN_DIR = .
+
+
+PIQIC = piqic-erlang-ext
+PIQIC_FLAGS = --no-warnings
+
+
+PIQI_FILES = addressbook.proto.piqi piqi_obj.piqi
+
+
+PIQI_ERL_FILES = \
+	addressbook_piqi.erl addressbook_piqi_ext.erl \
+	piqi_obj_piqi.erl piqi_obj_piqi_ext.erl
+
+PIQI_HRL_FILES = \
+	addressbook_piqi.hrl \
+	piqi_obj_piqi.hrl
+
+PIQI_ERLANG_FILES = $(PIQI_ERL_FILES) $(PIQI_HRL_FILES)
+
+
+PRE_TARGET = $(PIQI_ERLANG_FILES)
+
+
+all: ebin
+
+
+$(PIQI_ERLANG_FILES): $(PIQI_FILES)
+	set -e; \
+	for i in $^; do \
+		$(PIQIC) $(PIQIC_FLAGS) $$i; \
+	done
+
+
+include $(PIQI_ROOT)/make/Makefile.erlang
+

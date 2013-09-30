@@ -1,0 +1,37 @@
+1.1
+     * Generate (more) globally unique identifiers to avoid conflicts when open'ing another module
+       processed by ulex (issue reported by Gerd Stolpmann)
+
+1.0
+     * Update to the new Camlp4 and to ocamlbuild (release for OCaml 3.10
+       only), by Nicolas Pouillard.
+
+0.8
+     * Really make it work with OCaml 3.09.
+     * Support for Utf-16.
+
+0.7 released May 24 2005
+     * Bug fixes
+     * Update to OCaml 3.09 (currently CVS). Still works with OCaml 3.08.
+     * MIT-like license (used to LGPL)
+
+0.5 release Jul. 8 2004
+     * Document how to use a custom implementation for lex buffers
+     * Update to OCaml 3.08
+
+0.4 released Jan. 10 2004
+     * Bug fix (accept 1114111 as valid Unicode code point)
+     * Add the rollback function
+
+0.3 released Oct. 8 2003
+     * Bug fix
+     * Add a new predefined class for ISO identifiers
+
+0.2 released Sep. 22 2003
+     * Changed the names of predefined regexp
+     * Fix max_code = 0x10ffff
+     * Lexers that changes encoding on the fly
+     * Documentation of the interface Ulexing
+
+0.1 released Sep. 20 2003
+     * Initial release
