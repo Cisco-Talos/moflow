@@ -9,4 +9,4 @@ then
   echo "Usage: `basename $0` <serialized.trace.bpt> <output.il>"
   exit 1
 fi
-iltrans -serializedtrace $1 -trace-concrete-subst -trace-dsa -pp-ast $2
+../utils/iltrans -serializedtrace $1 -trace-concrete-subst -trace-dsa -pp-ast $2
