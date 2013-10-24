@@ -54,7 +54,7 @@ enum {
 /********************************************/
 
 /*************** Syscall Regs ***************/
-#define SCOUTREG_WIN REG_EDX
-#define SCOUTREG_LIN REG_EAX
+#define SCOUTREG_WIN LEVEL_BASE::REG_EDX
+#define SCOUTREG_LIN LEVEL_BASE::REG_EAX
 
 #endif
