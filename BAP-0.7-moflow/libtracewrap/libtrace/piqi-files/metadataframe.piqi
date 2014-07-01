@@ -1,0 +1,97 @@
+.include [
+         .module types
+]
+
+% Frame representing the state of the system which collected this trace
+.record [
+        .name metadata-frame
+
+        % Trace creator version string.  Be as verbose as possible, including 
+        % SVN revisions, etc.
+        .field [
+               .name trace-writer-version
+               .type string
+               .optional
+        ]
+
+        % Options given to trace creator.  For the BAP PIN trace tool, this will
+        % just be the command line arguments.
+        .field [
+               .name trace-options
+               .type string
+               .optional
+        ]
+
+        % Name of binary being traced.
+        .field [
+               .name binary-name
+               .type string
+               .optional
+        ]
+
+        % MD5 hash of traced binary.
+        .field [
+               .name binary-hash
+               .type string
+               .optional
+        ]
+
+        % Input to binary.
+        % XXX: This should probably be a list, since there are different types of inputs.
+        .field [
+               .name binary-args
+               .type string
+               .optional
+        ]
+
+        % Time of tracing, in unixtime.
+        .field [
+               .name epoch-seconds
+               .type uint64
+               .optional
+        ]
+
+        % OS version (kernel).
+        .field [
+               .name os-version
+               .type string
+               .optional
+        ]
+
+        % OCaml version.
+        .field [
+               .name ocaml-version
+               .type string
+               .optional
+        ]
+
+        % MD5 of environment variables.
+        % Should we just include all the environment variables?
+        .field [
+               .name environment-hash
+               .type string
+               .optional
+        ]
+
+        % Machine identifier (hostname).
+        .field [
+               .name machine-id
+               .type string
+               .optional
+        ]
+
+        % Time to generate trace in seconds.
+        .field [
+               .name generation-time
+               .type int
+               .optional
+        ]
+
+        % Size of generated trace in bytes.
+        .field [
+               .name trace-size
+               .type int
+               .optional
+        ]
+
+]

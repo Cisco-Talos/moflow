@@ -1,0 +1,29 @@
+.include [
+         .module types
+]
+
+% Represent a function call
+.record [
+        .name call-frame
+
+        % The address of the call site
+        .field [
+               .name address
+               .type address
+               .code 1
+        ]
+
+        % The address of the call target
+        .field [
+               .name target
+               .type address
+               .code 2
+        ]
+
+        % The executing thread
+        .field [
+               .type thread-id
+               .code 3
+        ]
+]
+

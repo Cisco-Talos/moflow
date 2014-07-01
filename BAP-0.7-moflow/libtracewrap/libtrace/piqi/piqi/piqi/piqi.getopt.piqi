@@ -1,0 +1,29 @@
+% Piqi extensions for getopt
+%
+% This file defines extensions to the base Piqi self-specification for
+% command-line arguement parsing.
+% 
+% 
+% Copyright 2009, 2010, 2011, 2012, 2013 Anton Lavrik
+
+
+.include [ .module piqi ]
+
+
+% a single-letter getopt option or flag
+.extend [
+    (.typedef field option)
+
+    .with.field [
+        .name getopt-letter
+        .type word
+        .optional
+    ]
+
+    .with.field [
+        .name getopt-doc
+        .type string
+        .optional
+    ]
+]
+

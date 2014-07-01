@@ -1,0 +1,161 @@
+Ulex: a OCaml lexer generator for Unicode
+
+License:
+  Copyright (C) 2003, 2004, 2005, 2006 Alain Frisch
+  distributed under the terms of an MIT-like license : see LICENSE
+
+Author:
+  email: Alain.Frisch@inria.fr
+  web: http://www.eleves.ens.fr/home/frisch, http://www.cduce.org
+
+--------------------------------------------------------------------------
+Overview
+
+- ulex is a lexer generator.
+
+- it is implemented as an OCaml syntax extension:
+  lexer specifications are embedded in regular OCaml code.
+
+- the lexers work with a new kind of "lexbuf" that supports Unicode;
+  a single lexer can work with arbitrary encodings of the input stream.
+
+--------------------------------------------------------------------------
+Lexer specifications
+
+ulex adds a new kind of expression to OCaml: lexer definitions.
+The syntax for the new construction is:
+
+  lexer
+    R1 -> e1
+  | R2 -> e2
+  ...
+  | Rn -> en
+
+where the Ri are regular expressions and the ei are OCaml expressions
+(called actions).  The keyword lexer can optionally be followed by a
+vertical var.  The type of this expression if Ulexing.lexbuf -> t
+where t is the common type of all the actions.
+
+Unlike ocamllex, lexers work on stream of Unicode code points,
+not bytes.
+
+The actions have access to a variable "lexbuf", of type
+Ulexing.lexbuf. They can call function from the Ulexing module to
+extract (parts of) the matched lexeme, in the desired encoding.
+
+It is legal to define mutually recursive lexers
+with additional arguments:
+
+ let rec lex1 x y = lexer 'a' -> lex2 0 1 lexbuf | _ -> ...
+ and lex2 a b = lexer ...
+
+
+The syntax of regular expressions is derived from ocamllex.
+Additional features:
+
+ - integer literals, where character literal are expected.
+   They represent a Unicode code point.
+   E.g.:
+
+      [ 'a'-'z' 1000-1500 ]   65
+
+ - inside square brackets, a string represents the union of all its
+   characters
+
+Note: OCaml source files are supposed to be encoded in Latin1.
+
+It is possible to define named regular expressions with
+the following construction, that can appear in place of
+of structure item:
+
+  let regexp n = R
+
+where n is the regexp name to be defined.
+
+Because ulex is implemented as a syntax extension, it can deal
+with both original and revised syntax (and possibly others).
+
+Note that lexer specifications need not be named. Here is
+an example:
+
+  (lexer ("#!" [^ '\n']* "\n")? -> ()) lexbuf
+
+--------------------------------------------------------------------------
+Scoping rules for regular expressions declarations
+
+Regexp declarations look pretty-much like regular OCaml let-bindings.
+However, they can only be used as structure item (no local
+binding let regexp n = R in ...). Moreover, they don't respect
+OCaml scoping rule. Indeed, the lexical scope of a given
+"let regexp" is the whole source file following the declaration.
+Also the regexps names are not exported by a module, and you cannot
+use qualified names A.n (where n is a regexp defined in module A).
+
+
+--------------------------------------------------------------------------
+Predefined regexps
+
+ulex provides a set of predefined regexps:
+- eof: the virtual end-of-file character
+- xml_letter, xml_digit, xml_extender, xml_base_char, xml_ideographic,
+  xml_combining_char, xml_blank: as defined by the XML recommandation
+- tr8876_ident_char: characters names in identifiers from ISO TR8876
+
+--------------------------------------------------------------------------
+Running a lexer
+
+To run a lexer, you must call it on a Ulexing.lexbuf.
+Such an object represents a Unicode buffer. It can be created
+from Latin1-encoded or utf8-encoded strings, stream, or channels,
+or from integer arrays or streams (which represent Unicode code points).
+
+See the interface of the module Ulexing.
+
+There is also some support for parsing Utf-16 encoded streams
+and manipulating utf16 strings. See the interface of the module Utf16.
+
+It is possible to work with a custom implementation for lex buffers.
+To do this, you just have to ensure that a module called
+Ulexing is in scope of your lexer specifications. See
+custom_ulexing.ml in the distribution for an example,
+and the interface of Ulexing for a specification of what the module
+should export.
+
+
+--------------------------------------------------------------------------
+Using ulex
+
+The first thing to do is to compile and install ulex.
+You need recent versions of OCaml.
+
+  make all
+  make all.opt (* optional *)
+
+1. With findlib
+
+If you have findlib, you can use it to install and use ulex.
+The name of the findlib package is "ulex".
+
+Installation:
+
+  make install
+
+Compilation of OCaml files with lexer specifications:
+
+  ocamlfind ocamlc -c -package ulex -syntax camlp4o my_file.ml
+
+When linking, you must also include the ulex package:
+  ocamlfind ocamlc -o my_prog -linkpkg -package ulex my_file.cmo
+
+
+2. Without findlib
+
+You can use ulex without findlib. To compile, you need to run the source
+file through the Camlp4 syntax extension pa_ulex.cma. Moreover, you need to 
+link the application with the runtime support library for ulex 
+(ulexing.cma / ulexing.cmxa).
+
+--------------------------------------------------------------------------
+Acknowledgments
+
+Thanks to Benus Becker for contributing an implementation of Utf16.

@@ -1,0 +1,40 @@
+include $(PIQI_ROOT)/make/Makefile.ocaml
+
+
+RESULT = io_json_xml_pb
+
+
+SOURCES = \
+	$(PIQI_ML_FILES) \
+	io_json_xml_pb.ml
+
+
+PACKS = piqi.lib
+
+
+PIQI_FILES = addressbook.proto.piqi
+PIQI_ML_FILES = addressbook_piqi.ml addressbook_piqi_ext.ml
+
+
+PRE_TARGETS = $(PIQI_ML_FILES)
+
+
+PIQIC = piqic
+PIQIC_FLAGS = --pp --leave-tmp-files --gen-defaults
+
+
+all: native-code #byte-code debug-code
+
+
+$(PIQI_ML_FILES): $(PIQI_FILES)
+	set -e; \
+	for i in $^; do \
+		$(PIQIC) ocaml-ext $(PIQIC_FLAGS) $$i ; \
+	done
+
+
+clean::
+	rm -f *.tmp.ml
+
+
+include $(OCAMLMAKEFILE)

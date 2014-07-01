@@ -1,0 +1,21 @@
+.include [
+         .module types
+]
+
+% Represent a basic block 
+.record [
+        .name block-frame
+
+        % The address of the basic block
+        .field [
+               .name address
+               .type address
+               .code 1
+        ]
+
+        % The executing thread
+        .field [
+               .type thread-id
+               .code 2
+        ]
+]

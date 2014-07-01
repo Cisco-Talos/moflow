@@ -1,0 +1,337 @@
+.variant [
+         .name typ
+
+         .option [
+                 .type reg
+                 .code 1
+         ]
+
+         .option [
+                 .type tmem
+                 .code 2
+         ]
+
+         .option [
+                 .type array
+                 .code 3
+         ]
+]
+
+.alias [
+        .name reg
+        .type int
+]
+
+.record [
+        .name tmem
+
+        .field [
+               .name index-type
+               .type typ
+        ]
+]
+
+.record [
+        .name array
+
+        .field [
+               .name index-type
+               .type typ
+        ]
+
+        .field [
+               .name element-type
+               .type typ
+        ]
+]
+
+.variant [
+        .name label
+
+        .option [
+                .name name
+                .type string
+        ]
+
+        .option [
+                .name addr
+                .type address
+        ]
+]
+
+.enum [
+      .name cast-type
+
+      .option [ .name cast-unsigned .code 1 ]
+      .option [ .name cast-signed .code 2 ]
+      .option [ .name cast-high .code 3 ]
+      .option [ .name cast-low .code 4 ]
+]
+
+.enum [
+      .name binop-type
+
+      .option [ .name plus .code 1 ]
+      .option [ .name minus .code 2 ]
+      .option [ .name times .code 3 ]
+      .option [ .name divide .code 4 ]
+      .option [ .name sdivide .code 5 ]
+      .option [ .name modbop .code 6 ]
+      .option [ .name smod .code 7 ]
+      .option [ .name lshift .code 8 ]
+      .option [ .name rshift .code 9 ]
+      .option [ .name arshift .code 10 ]
+      .option [ .name andbop .code 11 ]
+      .option [ .name orbop .code 12 ]
+      .option [ .name xor .code 13 ]
+      .option [ .name eq .code 14 ]
+      .option [ .name neq .code 15 ]
+      .option [ .name lt .code 16 ]
+      .option [ .name le .code 17 ]
+      .option [ .name slt .code 18 ]
+      .option [ .name sle .code 19 ]
+]
+
+.enum [
+      .name unop-type
+
+      .option [ .name neg .code 1 ]
+      .option [ .name not .code 2 ]
+]
+
+.record [
+        .name var
+
+        .field [
+               .name name
+               .type string
+        ]
+
+        .field [
+               .name id
+               .type int
+        ]
+
+        .field [
+               .type typ
+        ]
+]
+
+.alias [
+       .name lab
+       .type string
+]
+
+.variant [
+        .name attribute
+
+        .option [
+               .type asm
+               .code 1
+        ]
+
+        .option [
+               .type address
+               .code 2
+        ]
+
+        .option [
+               .type liveout
+               .code 3
+        ]
+
+        .option [
+               .type strattr
+               .code 4
+        ]
+
+        .option [
+               .type context
+               .code 5
+        ]
+
+        .option [
+               .type thread-id
+               .code 6
+        ]
+
+        .option [
+               .type synthetic
+               .code 7
+        ]
+
+        .option [
+                .name other
+                .type string
+                .code 8
+        ]
+]
+
+.list [
+      .name attributes
+      .type attribute
+]
+
+.alias [
+       .name asm
+       .type string
+]
+
+.alias [
+       .name address
+       .type int64
+]
+
+.record [
+       .name liveout
+]
+
+.record [
+       .name synthetic
+]
+
+.alias [
+       .name strattr
+       .type string
+]
+
+.alias [
+       .name thread-id
+       .type uint64
+]
+
+.variant [
+         .name operand-info-specific
+
+         .option [
+                 .type mem-operand
+                 .code 1
+         ]
+
+         .option [
+                 .type reg-operand
+                 .code 2
+         ]
+]
+
+% Represent a register operand value
+.record [
+        .name reg-operand
+        % Register name
+        .field [
+               .name name
+               .type string
+               .code 1
+        ]
+]
+
+.alias [
+       .name bit-length
+       .type int
+]
+
+.alias [
+       .name taint-id
+       .type uint64
+]
+
+.record [
+      .name operand-usage
+
+      % Is this operand read during this instruction?
+      .field [
+             .name read
+             .type bool
+             .code 1
+      ]
+
+      % Is this operand written to?
+      .field [
+             .name written
+             .type bool
+             .code 2
+      ]
+
+      % Is this operand used as the index of a memory lookup?
+      .field [
+             .name index
+             .type bool
+             .code 3
+      ]
+
+      % Is this operand used as the base of a memory lookup?
+      .field [
+             .name base
+             .type bool
+             .code 4
+      ]
+]
+
+% Represent a memory operand value
+.record [
+        .name mem-operand
+
+        % Address
+        .field [
+               .type address
+               .code 1
+        ]
+]
+
+.variant [
+         .name taint-info
+
+         % Operand not tainted
+         .option [
+                 .name no-taint
+                 .code 1
+         ]
+
+         % Taint from a single source
+         .option [
+                 .type taint-id
+                 .code 2
+         ]
+
+         % Taint from more than one source
+         .option [
+                 .name taint-multiple
+                 .code 3
+         ]
+]
+
+.record [
+        .name context
+
+        % Mem/register specific stuff.
+        .field [
+               .type operand-info-specific
+               .code 1
+        ]
+
+
+        % Size in bits
+        .field [
+               .type bit-length
+               .code 2
+        ]
+
+        % Usage (read, written, both)
+        .field [
+               .type operand-usage
+               .code 3
+        ]
+
+        % Taint information
+        .field [
+               .type taint-info
+               .code 4
+        ]
+
+        % Value
+        .field [
+               .name value
+               .type string
+               .code 5
+        ]
+]

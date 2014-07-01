@@ -1,0 +1,33 @@
+%
+% defining custom Erlang types to be serialized as some Piqi types
+%
+
+.alias [
+    .name erlang-bigint
+    .type string
+    .erlang-type "piqirun_custom:bigint"
+]
+
+
+.alias [
+    .name erlang-term
+    .type binary
+    .erlang-type "piqirun_custom:term_t"
+]
+
+
+% a record that uses the above definitions
+.record [
+    .name r
+
+    .field [
+        .name bi
+        .type erlang-bigint
+    ]
+
+    .field [
+        .name term
+        .type erlang-term
+    ]
+]
+

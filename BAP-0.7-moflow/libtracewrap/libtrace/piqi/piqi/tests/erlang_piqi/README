@@ -1,0 +1,10 @@
+
+Compile complex Piqi specification "piqi/piqi.piqi" to produce Erlang coders
+and decoders.
+
+Then build a program which reads and writes back a serialized binary object
+which happens to be the serialized "piqi.piqi" specification itself.
+
+Also testing Piqi imports in Erlang by compiling and linking "piqobj.piqi" which
+imports "piqi.piqi".
+

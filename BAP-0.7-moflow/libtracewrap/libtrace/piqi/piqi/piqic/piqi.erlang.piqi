@@ -1,0 +1,47 @@
+
+.include [ .module piqi/piqi ]
+
+
+%
+% types
+%
+
+.extend [
+    (.typedef int int32 int64)
+
+    .with.erlang-type "integer"
+]
+
+.extend [
+    (.typedef uint uint32 uint64)
+
+    .with.erlang-type "non_neg_integer"
+]
+
+
+%
+% names
+%
+
+.extend [
+    .typedef record
+
+    .with.erlang-name "piqi_record"
+]
+
+.extend [
+    .typedef list
+
+    .with.erlang-name "piqi_list"
+]
+
+.extend [
+    .typedef piqi-list
+
+    % erlang-name "piqi-list" is already defined for record "list"
+    .with.erlang-name "piqi_bundle"
+]
+
+
+(.custom-field erlang-type erlang-name)
+

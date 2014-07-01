@@ -1,0 +1,346 @@
+
+.erlang-type-prefix ""
+
+
+.function [
+    .name list-processes
+
+    .output.list [ .type pid ]
+]
+
+
+.function [
+    .name process-info
+
+    .input [
+        .field [
+            .name pid
+            .type pid
+        ]
+    ]
+
+    .output process-info
+
+    .error string
+]
+
+
+.function [
+    .name list-process-info
+
+    .input.list [ .type process-property ]
+
+    .output.list [ .type process-info ]
+]
+
+
+.enum [
+    .name process-property
+
+    .option [
+        .name all
+
+        .getopt-letter a
+        .getopt-doc "all properties of the process listed below except for -m and -d"
+    ]
+
+    .option [
+        .name registered-name
+
+        .getopt-letter n
+        .getopt-doc "registered name of the process"
+    ]
+
+    .option [
+        .name current-function
+
+        .getopt-letter f
+        .getopt-doc "current function call of the process"
+    ]
+
+    .option [
+        .name initial-call
+
+        .getopt-letter i
+        .getopt-doc "initial function call with which the process was spawned"
+    ]
+
+    .option [
+        .name status
+
+        .getopt-doc "status of the process"
+    ]
+
+    .option [
+        message-queue-len
+
+        .getopt-letter l
+        .getopt-doc "number of messages currently in the message queue of the process"
+    ]
+
+    .option [
+        messages
+
+        .getopt-letter m
+        .getopt-doc "a list of the messages to the process"
+    ]
+
+    .option [
+        links
+
+        .getopt-doc "list of pids, with processes to which the process has a link"
+    ]
+
+    .option [
+        dictionary
+
+        .getopt-letter d
+        .getopt-doc "dictionary of the process"
+    ]
+
+    .option [
+        trap-exit
+
+        .getopt-letter t
+        .getopt-doc "true if the process is trapping exits, otherwise it is false"
+    ]
+
+    .option [
+        error-handler
+        .getopt-doc "error handler module used by the process"
+    ]
+
+    .option [
+        priority
+        .getopt-doc "current priority level for the process"
+    ]
+
+    .option [
+        group-leader
+        .getopt-doc "group leader for the IO of the process"
+    ]
+
+    .option [
+        total-heap-size
+
+        .getopt-letter s
+        .getopt-doc "total size in words of all heap fragments of the process (includig stack)"
+    ]
+
+    .option [
+        heap-size
+
+        .getopt-doc "size in words of youngest heap generation of the process"
+    ]
+
+    .option [
+        stack-size
+        .getopt-doc "stack size of the process in words"
+    ]
+
+    .option [
+        .name reductions
+
+        .getopt-letter r
+        .getopt-doc "number of reductions executed by the process"
+    ]
+
+    .option [
+        suspending
+        .getopt-doc "list of suspendee and suspend counts"
+    ]
+]
+
+
+.record [
+    .name process-info
+
+    .field [
+        .name pid
+        .type pid
+    ]
+
+    .field [
+        .name registered-name
+        .type string
+        .optional
+    ]
+
+    .field [
+        .name current-function
+        .type string
+        .optional
+    ]
+
+    .field [
+        .name initial-call
+        .type string
+        .optional
+    ]
+
+    .field [
+        .type status
+        .optional
+    ]
+
+    .field [
+        .name message-queue-len
+        .type int
+        .optional
+    ]
+
+    .field [
+        .type messages
+        .optional
+    ]
+
+    .field [
+        .type links
+        .optional
+    ]
+
+    .field [
+        .type dictionary
+        .optional
+    ]
+
+    .field [
+        .name trap-exit
+        .type bool
+        .optional
+    ]
+
+    .field [
+        .name error-handler
+        .type string
+        .optional
+    ]
+
+
+    .field [
+        .type priority
+        .optional
+    ]
+
+    .field [
+        .name group-leader
+        .type pid
+        .optional
+    ]
+
+    .field [
+        .name total-heap-size
+        .type int
+        .optional
+    ]
+
+    .field [
+        .name heap-size
+        .type int
+        .optional
+    ]
+
+    .field [
+        .name stack-size
+        .type int
+        .optional
+    ]
+
+    .field [
+        .name reductions
+        .type int
+        .optional
+    ]
+
+    .field [
+        .name suspending
+        .type suspendee-list
+        .optional
+    ]
+]
+
+
+.alias [
+    .name pid
+    .erlang-name "epid"
+
+    .type string
+]
+
+
+.enum [
+    .name status
+    .option [ waiting ]
+    .option [ running ]
+    .option [ runnable ]
+    .option [ suspended ]
+]
+
+
+.list [
+    .name messages
+    .type string
+]
+
+
+.list [
+    .name links
+    .type pid
+]
+
+
+.list [
+    .name dictionary
+    .type dictionary-item
+]
+
+
+.record [
+    .name dictionary-item
+
+    .field [
+        .name key
+        .type string
+    ]
+
+    .field [
+        .name value
+        .type string
+    ]
+]
+
+
+.enum [
+    .name priority
+    .option [ low ]
+    .option [ normal ]
+    .option [ high ]
+    .option [ max ]
+]
+
+
+.list [
+    .name suspendee-list
+    .type suspendee
+]
+
+
+.record [
+    .name suspendee
+
+    .field [
+        .name suspendee
+        .type pid
+    ]
+
+    .field [
+        .name active-suspend-count
+        .type int
+    ]
+
+    .field [
+        .name outstanding-suspend-count
+        .type int
+    ]
+]
+

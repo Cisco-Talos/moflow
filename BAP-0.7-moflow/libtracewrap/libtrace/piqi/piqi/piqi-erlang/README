@@ -1,0 +1,8 @@
+To install and use Piqi Erlang application separately from the rest of the Piqi
+codebase, use the following rebar[1] package:
+
+        https://github.com/alavrik/piqi-erlang
+
+
+[1] Rebar is a build system for Erlang projects: https://github.com/basho/rebar
+

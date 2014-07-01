@@ -1,0 +1,183 @@
+.include [
+         .module exp
+]
+
+% See ast.ml for explanations
+
+.list [
+      .name program
+      .type stmt
+]
+
+.variant [
+         .name stmt
+
+         .option [
+                 .type move
+                 .code 1
+         ]
+
+         .option [
+                 .type jmp
+                 .code 2
+         ]
+
+         .option [
+                 .type cjmp
+                 .code 3
+         ]
+
+         .option [
+                 .type label-stmt
+                 .code 4
+         ]
+
+         .option [
+                 .type halt
+                 .code 5
+         ]
+
+         .option [
+                 .type assert-stmt
+                 .code 6
+         ]
+
+         .option [
+                 .type assume
+                 .code 7
+         ]
+
+         .option [
+                 .type comment
+                 .code 8
+         ]
+
+         .option [
+                 .type special
+                 .code 9
+         ]
+
+]
+
+.record [
+        .name move
+
+        .field [
+               .type var
+        ]
+
+        .field [
+               .type exp
+        ]
+
+        .field [
+               .type attributes
+        ]
+]
+
+.record [
+        .name jmp
+
+        .field [
+               .type exp
+        ]
+
+        .field [
+               .type attributes
+        ]
+]
+
+.record [
+        .name cjmp
+
+        .field [
+               .name cond
+               .type exp
+        ]
+
+        .field [
+               .name iftrue
+               .type exp
+        ]
+
+        .field [
+               .name iffalse
+               .type exp
+        ]
+
+        .field [
+               .type attributes
+        ]
+]
+
+.record [
+        .name label-stmt
+
+        .field [
+               .type label
+        ]
+
+        .field [
+               .type attributes
+        ]
+]
+
+.record [
+        .name halt
+
+        .field [
+               .type exp
+        ]
+
+        .field [
+               .type attributes
+        ]
+]
+
+.record [
+        .name assert-stmt
+
+        .field [
+               .type exp
+        ]
+
+        .field [
+               .type attributes
+        ]
+]
+
+.record [
+        .name assume
+
+        .field [
+               .type exp
+        ]
+
+        .field [
+               .type attributes
+        ]
+]
+
+.record [
+        .name comment
+
+        .field [
+               .type string
+        ]
+
+        .field [
+               .type attributes
+        ]
+]
+
+.record [
+        .name special
+
+        .field [
+               .type string
+        ]
+
+        .field [
+               .type attributes
+        ]
+]

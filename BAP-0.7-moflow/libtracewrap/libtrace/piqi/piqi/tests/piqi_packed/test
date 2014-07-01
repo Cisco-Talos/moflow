@@ -1,0 +1,42 @@
+#!/bin/sh
+
+set -ex
+
+piqi check packed.piqi
+piqi check packed-nocompat.piqi
+
+for i in *.piq
+do
+        piqi check $i
+        piqi convert -t pib $i
+        piqi convert $i.pib
+done
+
+
+piqi to-proto packed.piqi
+protoc -o/dev/null packed.piqi.proto
+
+piqi to-proto unpacked.piqi
+protoc -o/dev/null unpacked.piqi.proto
+
+
+piqi of-proto packed.piqi.proto
+piqi check packed.piqi.proto.piqi
+
+piqi of-proto unpacked.piqi.proto
+piqi check unpacked.piqi.proto.piqi
+
+
+piqi convert -t pb test-all.piq
+cat test-all.piq.pb |  protoc --decode=r_all packed.piqi.proto
+
+
+piqi convert -t pb test-all-unpacked.piq
+cat test-all-unpacked.piq.pb |  protoc --decode=r_all unpacked.piqi.proto
+
+
+# backward-compatible mode: when parsing packed fields must also accept unpacked
+piqi convert -t pb test-all-unpacked.piq
+cat test-all-unpacked.piq.pb |  protoc --decode=r_all packed.piqi.proto
+
+piqi convert --type packed/r-all test-all-unpacked.piq.pb

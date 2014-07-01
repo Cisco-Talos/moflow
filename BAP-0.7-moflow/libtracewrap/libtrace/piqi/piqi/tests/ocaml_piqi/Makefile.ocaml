@@ -1,0 +1,31 @@
+include $(PIQI_ROOT)/make/Makefile.ocaml
+
+RESULT = otest
+
+
+SOURCES = $(PIQI_ML_SOURCES) test.ml
+PIQI_ML_SOURCES = piqi_piqi.ml piqobj_piqi.ml
+
+
+PRE_TARGETS = $(PIQI_ML_SOURCES)
+
+
+PIQIC_FLAGS = --pp --gen-defaults
+
+
+PACKS = piqi.runtime
+
+# LIBS = piqirun
+# LIBDIRS = $(PIQI_ROOT)/piqirun-ocaml
+# INCDIRS = $(PIQI_ROOT)/piqirun-ocaml
+
+
+all: bc #top
+
+
+$(PIQI_ML_SOURCES): *.piqi
+	piqic ocaml $(PIQIC_FLAGS) piqi.piqi
+	piqic ocaml $(PIQIC_FLAGS) piqobj.piqi
+
+
+include $(OCAMLMAKEFILE)

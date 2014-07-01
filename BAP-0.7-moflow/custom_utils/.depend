@@ -1,0 +1,16 @@
+common.cmo: ../ocaml/pp.cmo ../ocaml/parser.cmo ../ocaml/debug.cmi
+common.cmx: ../ocaml/pp.cmx ../ocaml/parser.cmx ../ocaml/debug.cmx
+motriage.cmo: ../ocaml/util.cmi ../ocaml/type.cmi \
+    ../ocaml/traces_backtaint.cmo ../ocaml/traces.cmo ../ocaml/symbeval.cmo \
+    ../ocaml/disasm_i386.cmo common.cmo ../zarith-1.0/big_int_Z.cmi \
+    ../ocaml/ast.cmo ../ocaml/asmir.cmi
+motriage.cmx: ../ocaml/util.cmx ../ocaml/type.cmx \
+    ../ocaml/traces_backtaint.cmx ../ocaml/traces.cmx ../ocaml/symbeval.cmx \
+    ../ocaml/disasm_i386.cmx common.cmx ../zarith-1.0/big_int_Z.cmx \
+    ../ocaml/ast.cmx ../ocaml/asmir.cmx
+slicer.cmo: ../ocaml/var.cmi ../ocaml/util.cmi ../ocaml/type.cmi \
+    ../ocaml/traces_surgical.cmo ../ocaml/traces.cmo ../ocaml/symbeval.cmo \
+    common.cmo ../ocaml/ast_visitor.cmi ../ocaml/ast.cmo
+slicer.cmx: ../ocaml/var.cmx ../ocaml/util.cmx ../ocaml/type.cmx \
+    ../ocaml/traces_surgical.cmx ../ocaml/traces.cmx ../ocaml/symbeval.cmx \
+    common.cmx ../ocaml/ast_visitor.cmx ../ocaml/ast.cmx

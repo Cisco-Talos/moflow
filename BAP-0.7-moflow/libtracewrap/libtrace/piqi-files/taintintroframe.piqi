@@ -1,0 +1,62 @@
+.include [
+         .module types
+]
+
+% Represent tainted bytes being introduced to memory
+.record [
+        .name taint-intro-frame
+
+        .field [
+               .type taint-intro-list
+               .code 1
+        ]
+]
+
+.list [
+      .name taint-intro-list
+      .type taint-intro
+]
+
+% An address and its corresponding taint identifier
+.record [
+        .name taint-intro
+
+        % The address the tainted byte is at
+        .field [
+               .name addr
+               .type address
+               .code 1
+        ]
+
+        % The taint identifier
+        .field [
+               .type taint-id
+               .code 2
+        ]
+
+        % Initial concrete value when introduced.
+
+        % This is important for consistency checking;
+        % a taint engine should be able to predict
+        % the value of all tainted values at all times.
+        .field [
+               .name value
+               .type binary
+               .optional
+               .code 3
+        ]
+
+        % Name of the taint source (file name, arguments, env. vars, etc)
+        .field [
+          .name source-name
+          .type string
+          .code 4
+          ]
+
+        % Offset in the taint source. 
+        .field [
+          .name offset
+          .type address
+          .code 5
+        ]
+]

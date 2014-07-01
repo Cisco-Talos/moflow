@@ -1,0 +1,64 @@
+#!/usr/bin/env escript
+%%! -noshell -noinput
+
+
+main([Escript | Beams]) when Beams =/= [] ->
+    make_escript(Escript, Beams);
+
+main(_) ->
+    io:format("usage: make_escript <escript-name> [<*.beam>]"),
+    erlang:halt(1).
+
+
+make_escript(Escript, Beams) ->
+    io:format("creating escript \"~s\" with body ~p~n", [Escript, Beams]),
+
+    Archive = [ {filename:basename(X), read_file(X)} || X <- Beams ],
+
+    % make escript args
+    Mod = filename:basename(last(Beams), ".beam"),
+    Args = "-noshell -noinput -escript main " ++ Mod,
+
+    make_escript_otp_r13(Escript, Archive, Args).
+
+
+read_file(Name) ->
+    {ok, Bin} = file:read_file(Name),
+    Bin.
+
+
+last([H]) -> H;
+last([_|T]) -> last(T).
+
+
+
+make_escript_otp_r13(Escript, Archive, Args) ->
+    {ok, {"mem", Zip}} = zip:create("mem", Archive, [memory]),
+    BinArgs = list_to_binary(Args),
+    Script = <<
+        "#!/usr/bin/env escript\n",
+        "%% This is an -*- erlang -*- file\n",
+        "%%! ", BinArgs/binary, "\n",
+        Zip/binary>>,
+    ok = file:write_file(Escript, Script),
+    case os:type() of
+        {unix, _} ->
+            [] = os:cmd("chmod u+x " ++ Escript),
+            ok;
+        _ ->
+            ok
+    end.
+
+
+% Apparently, this method was first added in R14A and it is not compatible with
+% earlier Erlang/OTP releases.
+%
+%make_escript_otp_r14(Escript, Archive, Args) ->
+%    ok = escript:create(Escript, [
+%            shebang, comment,
+%            {emu_args, Args},
+%            {archive, Archive, []}
+%    ]).
+
+
+% vim: ft=erlang

@@ -1,0 +1,28 @@
+.include [
+         .module types
+]
+
+% Represent an executable module being loaded
+.record [
+        .name modload-frame
+
+        .field [
+               .name module-name
+               .type string
+               .code 1
+        ]
+
+        % The lowest address in this module
+        .field [
+               .name low-address
+               .type address
+               .code 2
+        ]
+
+        % The highest address in this module
+        .field [
+               .name high-address
+               .type address
+               .code 3
+        ]
+]

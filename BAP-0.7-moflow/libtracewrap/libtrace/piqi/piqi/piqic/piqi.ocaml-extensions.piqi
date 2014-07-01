@@ -1,0 +1,61 @@
+
+
+.include [ .module piqi/piqi ]
+
+.include [ .module piqic/piqi.ocaml ]
+
+
+.extend [
+    (.typedef record field variant option enum alias list import function)
+
+    .with.field [
+        .name ocaml-name
+        .type string
+        .optional
+    ]
+]
+
+
+.extend [
+    .typedef piqi
+
+    .with.field [
+        .name ocaml-module
+        .type string
+        .optional
+    ]
+]
+
+
+.extend [
+    .typedef alias
+
+    .with.field [
+        .name ocaml-type
+        .type string
+        .optional
+    ]
+]
+
+
+% flag for representing repeated fields and lists as OCaml arrays
+.extend [
+    (.typedef field list)
+
+    .with.field [
+        .name ocaml-array
+        .optional
+    ]
+]
+
+
+% flag for representing optional fields with defaults as 'a option instead of 'a
+.extend [
+    .typedef field
+
+    .with.field [
+        .name ocaml-optional
+        .optional
+    ]
+]
+

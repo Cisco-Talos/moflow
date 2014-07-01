@@ -1,0 +1,30 @@
+.PHONY: all clean
+
+
+PIQI_FILES = piqi-rpc.piqi piqi-tools.piqi piqi.piqi
+
+PIQI_ERL_FILES = piqi_rpc_piqi.erl piqi_tools_piqi.erl piqi_piqi.erl
+PIQI_HRL_FILES = piqi_rpc_piqi.hrl piqi_tools_piqi.hrl piqi_piqi.hrl
+
+PIQI_ERLANG_FILES = $(PIQI_ERL_FILES) $(PIQI_HRL_FILES)
+
+
+PIQIC = $(PIQI_APP_DIR)/priv/bin-$(shell uname -s)-$(shell uname -m)/piqic
+PIQIC_FLAGS= -I ../.. # add Piqi root diretory to the Piqi module search path
+
+
+all: $(PIQI_ERLANG_FILES)
+
+
+$(PIQI_ERLANG_FILES): $(PIQI_FILES)
+	set -e; \
+	for i in $^; do \
+		$(PIQIC) erlang $(PIQIC_FLAGS) $$i; \
+	done
+
+
+clean:
+	rm -f $(PIQI_ERLANG_FILES)
+
+
+# vim:ft=make

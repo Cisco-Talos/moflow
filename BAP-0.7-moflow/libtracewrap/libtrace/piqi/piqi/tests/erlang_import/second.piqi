@@ -1,0 +1,16 @@
+.import [
+    .module first
+]
+
+.variant [
+    .name second-variant
+    .option [ .type first/first-record ]
+    .option [ .type first/first-variant ]
+]
+
+.record [
+    .name second-record
+    .field [ .type first/first-record ]
+    .field [ .type first/first-variant ]
+]
+

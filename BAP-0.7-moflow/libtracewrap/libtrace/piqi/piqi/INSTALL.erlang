@@ -1,0 +1,34 @@
+This file contains instructions for building Piqi to be used as a data
+serialization system for Erlang.
+
+
+PREREQUISITES
+=============
+
+        Piqi requires Erlang/OTP version >= R13B04
+
+
+PIQI REBAR PACKAGE
+==================
+
+The easiest way to build and install Piqi for Erlang is to use the rebar[1]
+package. It is maintained in a separate GitHub repository:
+
+        https://github.com/alavrik/piqi-erlang
+
+
+[1] Rebar is a build system for Erlang projects: https://github.com/rebar/rebar
+
+
+INSTALLING PIQI FROM SOURCE CODE
+================================
+
+1. Follow general build and installation instructions from the INSTALL file.
+
+2. Build "piqi" Erlang application:
+
+        make erlang
+
+        After that, the binary build as well as sources can be found in
+        "piqi-erlang" directory which has an OTP-compliant structure.
+

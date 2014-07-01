@@ -1,0 +1,11 @@
+# OASIS_START
+# DO NOT EDIT (digest: ace4a1cb56c7d987ff58e55d2d7e7ffa)
+version = "1.1.1"
+description = "Streaming XML IO for OCaml"
+archive(byte) = "xmlm.cma"
+archive(byte, plugin) = "xmlm.cma"
+archive(native) = "xmlm.cmxa"
+archive(native, plugin) = "xmlm.cmxs"
+exists_if = "xmlm.cma"
+# OASIS_STOP
+

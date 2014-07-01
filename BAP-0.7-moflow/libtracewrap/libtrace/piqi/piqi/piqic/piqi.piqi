@@ -1,0 +1,10 @@
+
+.include [ .module piqi/piqi ]
+
+
+% Piqi compiler currently supports Piqi dialect based on the following language
+% extensions:
+
+.include [ .module piqic/piqi.ocaml-extensions ]
+.include [ .module piqic/piqi.erlang-extensions ]
+

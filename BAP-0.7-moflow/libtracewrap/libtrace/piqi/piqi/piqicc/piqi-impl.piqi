@@ -1,0 +1,14 @@
+% This is a minimal "-impl.piqi" file for Piqi compiler compiler (piqicc).
+% It includes:
+% 
+% 1) The mandatory piqi specification ("piqicc.piqi").
+%
+% 2) Implementation-specific extensions ("piqilib/piqi-impl.piqi") used by
+% common piqi library (../piqilib). This way, piqicc doesn't have any custom
+% implementation-specific extensions -- only those required by common piqi
+% library. 
+
+.include [ .module piqilib/piqi-impl ]
+
+.include [ .module piqicc/piqi-lang ]
+

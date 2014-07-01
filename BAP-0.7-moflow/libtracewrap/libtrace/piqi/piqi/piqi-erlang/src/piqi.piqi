@@ -1,0 +1,30 @@
+
+.include [ .module piqic/piqi.erlang ]
+.include [ .module piqic/piqi.erlang-extensions ]
+
+
+% remove the "piqi" prefix from generated Erlang type and record names
+.erlang-type-prefix ""
+
+
+% now, with prefix being removed, we need to define custom Erlang names for some
+% types
+.extend [
+    .typedef function
+    .with.erlang-name "func"
+]
+
+
+.extend [
+    .typedef any
+    .with.erlang-name "piqi_any"
+]
+
+
+.extend [
+    .typedef piqi-any
+
+    % piqi_any is already taken by "any" (#piqi_any{}) itself
+    .with.erlang-name "piqi_piqi_any"
+]
+

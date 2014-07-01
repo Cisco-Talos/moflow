@@ -1,0 +1,165 @@
+
+This file contains instructions for building Piqi on Windows platform.
+
+Windows build procedure described in this documented uses MinGW/Msys toolchain
+for an older version of OCaml. Because of that, you need to follow instructions
+precisely. It is almost guaranteed to not work with newer versions of MinGW,
+OCaml and flexdll.
+
+The newer windows build procedure for OCaml 4.00.1 and MinGW-w64/Cygwin
+toolchain will be provided soon.
+
+Piqi also successfully builds and runs on Windows under Cygwin. To build Piqi
+under Cygwin, follow general instructions for Unix platforms provided in the
+INSTALL file.
+
+
+INSTALLATION INSTRUCTIONS
+=========================
+
+1. Download and install prerequisites
+
+1.1. MinGW and Msys
+
+        Download and run MinGW and Msys self-installer from here:
+
+                http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/mingw-get-inst-20110802/
+
+        During the "Select Components" step, check the "MinGW Developer Toolkit"
+        option.
+
+        If you choose to install MinGW to non-default location (c:\mingw), make
+        sure the location doesn't contain spaces in directory names.
+
+
+1.2. OCaml compiler suite
+
+        Download and install binary OCaml distribution for Windows:
+
+                http://caml.inria.fr/pub/distrib/ocaml-3.11/ocaml-3.11.0-win-mgw.exe
+
+
+1.3. Flexdll
+
+        Download and run self-extracting Flexdll installer:
+
+                http://alain.frisch.fr/flexdll/flexdll-0.26-setup.exe
+
+
+1.4. Ocamlfind/Findlib -- library manager for OCaml
+
+        Download findlib sources (but don't build it yet!):
+
+                http://projects.camlcity.org/projects/findlib.html
+
+        Put the tarball to some filesystem location, for example, to
+        "c:\build\".
+
+
+1.5. Piqi source code distribution
+
+        Download Piqi sources (but don't try to build it!):
+
+                Direct download link:
+
+                        https://github.com/alavrik/piqi/tarball/dev
+
+                General downloads:
+
+                        http://piqi.org/downloads/
+
+        Put the Piqi tarball to the same filesystem location where you've put
+        the findlib archive (e.g. "c:\build\").
+
+
+2. Build Findlib and Piqi
+
+
+2.1. Start MinGW shell
+
+        Start MinGW/Msys shell. The MinGW installer usually creates a desktop
+        shortcut for it.
+
+        Go to your build directory:
+
+                cd c:/build
+
+
+2.2. Unpack Findlib
+
+        tar -xzf findlib-*
+
+
+2.3. Unpack Piqi sources
+
+        tar -xzf piqi-*
+
+        Ignore all warnings and errors printed by tar.
+
+
+2.4. Configure Windows-specific build parameters
+
+        Note: this step is not necessary if MinGW, OCaml and Flexdll are
+        installed to the default locations suggested by their installers.
+
+        Use your favorite editor to configure environment variables in
+
+                c:\build\piqi\setenv-mingw.sh
+
+
+2.5. Apply build parameters
+
+        Go back to the opened MinGW shell and type the following commands:
+
+                cd piqi
+
+                . setenv-mingw.sh
+
+
+2.6. Build and install Findlib
+
+        Now, go to the unpacked findlib source code directory:
+
+                cd ..
+
+                cd findlib-<version>
+
+
+        And do the following:
+
+                ./configure
+
+                make all
+
+                make opt
+
+                make install
+
+        Note: once you've build and installed Findlib, you will no longer need
+        to repeat this step for subsequent Piqi builds.
+
+
+2.7. Build Piqi
+
+        Go back to the unpacked Piqi source code directory:
+
+                cd ..
+
+                cd piqi
+
+
+        Run the following commands:
+
+                ./configure
+
+                make deps
+
+                make
+
+
+        Successful build will produce two stand-alone Windows executables:
+
+               piqi-tools/piqi.exe
+
+               piqic/piqic.exe
+

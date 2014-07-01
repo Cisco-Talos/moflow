@@ -1,0 +1,268 @@
+.include [
+         .module type
+]
+
+% See ast.ml for explanations
+
+.variant [
+         .name exp
+
+         .option [
+                 .type load
+                 .code 1
+         ]
+
+         .option [
+                 .type store
+                 .code 2
+         ]
+
+         .option [
+                 .type binop
+                 .code 3
+         ]
+
+         .option [
+                 .type unop
+                 .code 4
+         ]
+
+         .option [
+                 .type var
+                 .code 5
+         ]
+
+         .option [
+                 .type lab
+                 .code 6
+         ]
+
+         .option [
+                 .type inte
+                 .code 7
+         ]
+
+         .option [
+                 .type cast
+                 .code 8
+         ]
+
+         .option [
+                 .type let-exp
+                 .code 9
+         ]
+
+         .option [
+                 .type unknown
+                 .code 10
+         ]
+
+         .option [
+                 .type ite
+                 .code 11
+         ]
+
+         .option [
+                 .type extract
+                 .code 12
+         ]
+
+         .option [
+                 .type concat
+                 .code 13
+         ]
+]
+
+.record [
+        .name load
+
+        .field [
+               .name memory
+               .type exp
+        ]
+
+        .field [
+               .name address
+               .type exp
+        ]
+
+        .field [
+               .name endian
+               .type exp
+        ]
+
+        .field [
+               .type typ
+        ]
+]
+
+.record [
+        .name store
+
+        .field [
+               .name memory
+               .type exp
+        ]
+
+        .field [
+               .name address
+               .type exp
+        ]
+
+        .field [
+               .name value
+               .type exp
+        ]
+
+        .field [
+               .name endian
+               .type exp
+        ]
+
+        .field [
+               .type typ
+        ]
+]
+
+.record [
+        .name binop
+
+        .field [
+               .type binop-type
+        ]
+
+        .field [
+               .name lexp
+               .type exp
+        ]
+
+        .field [
+               .name rexp
+               .type exp
+        ]
+]
+
+.record [
+        .name unop
+
+        .field [
+               .type unop-type
+        ]
+
+        .field [
+               .type exp
+        ]
+]
+
+.record [
+        .name inte
+
+        .field [
+               .name int
+               % This should probably be binary, but there is no easy
+               % way to convert from big int to binary
+               .type string
+        ]
+
+        .field [
+               .type typ
+        ]
+]
+
+.record [
+        .name cast
+
+        .field [
+               .type cast-type
+        ]
+
+        .field [
+               .name new-type
+               .type typ
+        ]
+
+        .field [
+               .type exp
+        ]
+]
+
+.record [
+        .name let-exp
+
+        .field [
+               .type var
+        ]
+
+        .field [
+               .name e1
+               .type exp
+        ]
+
+        .field [
+               .name e2
+               .type exp
+        ]
+]
+
+.record [
+        .name unknown
+
+        .field [
+               .type string
+        ]
+
+        .field [
+               .type typ
+        ]
+]
+
+.record [
+        .name ite
+
+        .field [
+               .name condition
+               .type exp
+        ]
+
+        .field [
+               .name iftrue
+               .type exp
+        ]
+
+        .field [
+               .name iffalse
+               .type exp
+        ]
+]
+
+.record [
+        .name extract
+
+        .field [
+               .name hbit
+               .type int
+        ]
+
+        .field [
+               .name lbit
+               .type int
+        ]
+
+        .field [
+               .type exp
+        ]
+]
+
+.record [
+        .name concat
+
+        .field [
+               .name le
+               .type exp
+        ]
+
+        .field [
+               .name re
+               .type exp
+        ]
+]

@@ -1,0 +1,90 @@
+\section{Discussion}
+\label{vine:discussion}
+
+\subsection{Why Design a New Infrastructure?}  
+
+At a high level, we designed \bap as a new platform because existing
+platforms are a) defined for higher-level languages and thus not
+appropriate for binary code analysis, b) designed for orthogonal goals
+such as binary instrumentation or decompilation, and/or c) unavailable
+to use for research purposes.  As a result, other tools we tried
+(e.g., DynInst~\cite{dyninst} version 5.2, Phoenix~\cite{phoenix}
+April 2008 SDK, IDA Pro~\cite{idapro} version 5, and others) were
+inadequate, e.g., could not create a correct control flow graph for
+the 3 line assembly shown in Figure~\ref{vine:shl-add}. Another reason
+we created \bap is so that we could be sure of the semantics of 
+analysis. Existing platforms tend not to have publicly available
+formally defined semantics, thus we would not know exactly what we are
+using.
+
+Formal semantics are important for several practical reasons. We found
+that defining the semantics of \bap was helpful in catching design
+bugs, unsupported assumptions, and other errors that could affect many
+different kinds of analysis. In addition, the semantics are helpful
+for communicating how \bap works with other researchers.  Further,
+without a specified semantics, it is difficult to show an analysis is
+correct. For example, in ~\cite{brumley:2006:alias} we show our
+proposed assembly-level alias analysis~\cite{brumley:2006:alias} is
+correct with respect to the operational semantics of \bap.
+
+
+\subsection{Limitations of \bap}
+
+\begin{description}
+\item[Architectures] \bap only supports x86 right now.  We intend to
+  add support for x86-64 and ARM in the future.
+\item[Semantics] \bap is designed to enable program analysis of binary
+  program states. Therefore, analyses that depend upon more than the
+  operational semantics of the instruction fall outside the scope of
+  \bap. For example, creating an analysis of the timing behavior of
+  binary programs falls outside the current scope of \bap.
+\item[User-mode instructions] \bap only models user-mode level
+  instructions.  Unhandled instructions will be lifted as {\tt
+    special} statements or {\tt unknown} expressions.
+\item[Integer instructions] \bap only models instructions that
+  manipulate integers.  In particular, \bap does not model floating
+  point instructions.
+\item[Indirect jumps] \bap does not currently resolve indirect jumps,
+  or perform ``CFG recovery''.  We plan to add this in a future
+  release.
+\end{description}
+
+\subsection{Is Lifting Correct?}
+
+Assembly instructions are lifted to \bap in a syntax directed manner.
+One may view the \bap IL as a model of the underlying assembly.  There
+is a chance, however, that lifting could produce incorrect
+IL. Although it is impossible to say that all assembly instructions
+are correctly lifted, the advantage of \bap's design is that only the
+lifting process needs to understand the semantics of the original
+assembly.
+
+We perform nightly testing to make sure that \bap's model of execution
+matches what happens on a real x86 processor.  Our nightly tests also
+tell us which instructions are used in our test programs that are not
+modeled in \bap.  The results of these tests are always available at
+\url{http://bap.ece.cmu.edu/nightly-reports/}.
+
+\subsection{Size of Lifting IL for a Program}
+
+A single assembly instruction will typically be translated into
+several \bap instructions. Thus, the resulting \bap program will
+have more statements than the corresponding assembly.  For example and
+roughly speaking, x86 assembly instructions are raised to be about 7
+\bap instructions: 1 \bap instruction for the direct effect, and 6
+for updating processor-specific status flags.
+
+In our experience, the constant-size factor in code size is worth the
+benefits of simplifying the semantics of assembly.  Assembly
+instructions are designed to be efficient for a computer to execute,
+not for a human to understand. The IL, on the other hand, is designed
+to be easy for a human to understand.  We have found even experienced
+assembly-level programmers will comment that they have a hard time
+keeping track of control and data dependencies since there are few
+syntactic cues in assembly to help. \bap, on the other hand, obviates
+all data and control dependencies within the code. 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End: 

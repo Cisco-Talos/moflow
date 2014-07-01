@@ -1,0 +1,43 @@
+Piqi tests
+==========
+
+To build, run and re-run the tests:
+
+1. Setup the environment
+
+    cd ..
+    . setenv.sh
+    cd -
+
+
+2. Run the tests
+
+    make
+
+
+3. (optional) Run Erlang tests
+
+    make erlang
+
+    NOTE: Erlang tests depend on Piqi runtime library, which can be built by
+    running "make erlang" command from the top-level directory.
+
+
+Prerequisites
+=============
+
+Most of the tests require Google Protocol Buffers (>= 2.3.0). It can be
+downloaded from here:
+
+    http://code.google.com/p/protobuf/downloads/list
+
+"boot_proto2piqi" and "cpp" tests require Protocol Buffers headers and .so
+libraries. If they are installed to a non-standard path, use "export CXXFLAGS=
+-I <headers path> -L <library path>" command to specify their locations. For
+example, if Protobuf is installed to "/opt/local", the command will be:
+
+    export CXXFLAGS="-I/opt/local/include/ -L/opt/local/lib"
+
+"piqi_proto" test requires access to Protobuf source directory. See
+piqi_proto/README for details.
+

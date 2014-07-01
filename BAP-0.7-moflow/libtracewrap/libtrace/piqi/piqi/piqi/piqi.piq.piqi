@@ -1,0 +1,39 @@
+% Piq-specific extensions for Piqi self-spec
+%
+% This file defines some extensions to the base Piqi specification enabling
+% properties specific to the Piq data representation format
+% 
+% Copyright 2009, 2010, 2011, 2012, 2013 Anton Lavrik
+
+
+.include [ .module piqi ]
+
+
+.extend [
+    (.typedef alias list field option)
+
+    .with.field [
+        .type piq-format
+        .optional
+    ]
+]
+
+
+% Piq-specific alternative representation format of Piqi types
+.variant [
+    .name piq-format
+
+    % representation of string values
+
+    .option [
+        % NOTE: if a string value can not be represented as single unquoted
+        % word, it will be pepresented as string liternal
+
+        .name word
+    ]
+
+    .option [
+        .name text
+    ]
+]
+

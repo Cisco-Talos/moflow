@@ -1,0 +1,43 @@
+
+.include [ .module piqi/piqi-lang ]
+
+
+.extend [
+    .option function-param.list
+
+    .with.ocaml-name "list"
+]
+
+.extend [
+    .typedef include
+
+    .with.ocaml-name "includ"
+]
+
+.extend [
+    .field include.module
+
+    .with.ocaml-name "modname"
+]
+
+.extend [
+    .field extend.with
+
+    .with.ocaml-name "piqi_with"
+]
+
+.extend [
+    .field extend.piqi-any
+
+    .with.ocaml-name "quote"
+]
+
+.extend [
+    .option extend-target.function
+
+    .with.ocaml-name "func"
+]
+
+
+.custom-field ocaml-name
+

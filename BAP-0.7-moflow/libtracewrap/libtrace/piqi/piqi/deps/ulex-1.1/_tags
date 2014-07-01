@@ -1,0 +1,3 @@
+"pa_ulex.ml": camlp4orf, use_camlp4
+<test.*> or "custom_ulexing.ml": use_ulex
+# true: use_ulex

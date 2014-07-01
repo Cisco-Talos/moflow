@@ -1,0 +1,125 @@
+\section{Traces}
+
+In this section, we will explain how to use our PIN-based trace
+recording tool to record a trace.  We then show how to perform common
+trace analysis tasks.
+
+\subsection{Setup}
+
+The PIN trace tool is located in the \cmdline{pintraces/} directory.
+Because of licensing reasons, we cannot distribute PIN with the trace
+tool.  The PIN tool cannot be built until PIN has been extracted
+inside of the \bap directory.  In the following, we assume that
+\cmdline{\$BAPDIR} is set to the \bap directory. For example, if you
+extracted \bap to \cmdline{/home/user/Downloads/bap-x.y}, then you should
+replace \cmdline{\$BAPDIR} below with
+\texttt{/home/user/Downloads/bap-x.y}. Once downloaded, PIN should be
+extracted to \cmdline{\$BAPDIR/pin}.  On Linux, running the
+./getpin.sh script from the \cmdline{\$BAPDIR/pintraces}
+directory will automatically download and extract PIN for Linux; the
+user is responsible for accepting the PIN license agreements.
+
+On Windows, the process is more complicated.  We usually test with
+Windows 7 and Windows XP SP3, but expect NT, 2000, 2003, Vista, and 7
+to work.  First, make sure that \cmdline{\$BAPDIR} contains no
+spaces. Then, install GNU Make for Windows
+(\url{http://gnuwin32.sourceforge.net/packages/make.htm}) and Visual
+C++ 2010 Express
+(\url{http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express}).
+Make sure to add the directory containing \texttt{make} (the default
+is \verb!C:\Program Files\GnuWin32\bin!) to the Windows \texttt{Path}
+environment variable.  Also download PIN and extract it to the
+\cmdline{\$BAPDIR/pin} directory.  Next, we need to upgrade the Visual
+Studio project for Google's protobuffers library, which our PIN tool
+depends on\footnote{This can be done automatically at the command line
+  using devenv.exe, but this tool is only part of Visual Studio
+  proper; it does not come with the Express versions.}.  To do this,
+navigate to the
+\cmdline{\$BAPDIR/libtracewrap/libtrace/protobuf/vsprojects} directory
+and open \cmdline{protobuf.sln}.  When the Visual Studio Conversion
+Wizard appears, click Finish and close the summary window.  It is
+normal for the conversion process to have warnings, but not errors.
+Next, right click on the libprotobuf project in the Solution Explorer,
+and select Properties.  Select the Release configuration at the top of
+the dialog box, and then navigate to the C/C++ Code Generation
+settings.  Change the Runtime Library to Multi-threaded
+(/MT)\footnote{If you skip this step, you will get unresolved symbol
+  errors while linking the PIN tool}.  Finally, close Visual Studio
+and save the changes to the project.  Open a Visual Studio command
+prompt, navigate to \cmdline{\$BAPDIR/libtracewrap/libtrace/src/cpp}
+and run \cmdline{make -f Makefile.windows} to build protobuffers and
+the libtrace library.
+
+The PIN tool itself can be built by executing \cmdline{make} in the
+\cmdline{\$BAPDIR/pintraces} directory on both Windows and Linux.
+After compilation, the PIN tool should exist in
+\\ \cmdline{\$BAPDIR/pintraces/obj-ia32/gentrace.so} (or
+gentrace.dll on Windows).  In the rest of the chapter, we will assume
+Linux is being used; most interaction with the trace tool is the same.
+
+\subsection{Recording a trace}
+
+To see the command line options to the trace tool, execute 
+
+\begin{verbatim} 
+$BAPDIR/pin/pin -t \
+ $BAPDIR/pintraces/obj-ia32/gentrace.so -help -- /bin/ls
+\end{verbatim}
+
+By default, the trace tool will only log instructions that are
+\emph{tainted}, i.e., those that depend on user input.  The options
+that begin with taint are used to mark various data
+as being user input.  For instance, -taint-files readme marks the file
+readme as being user input.
+
+We will record a trace of a simple buffer overflow.  Run 
+
+\begin{verbatim}
+echo ``helloooooooooooooooooo'' > readme
+\end{verbatim}
+
+ to create the input file.  Then run 
+
+\begin{verbatim}
+make -C $BAPDIR/pintraces/examples/bof1/
+\end{verbatim}
+
+and
+
+\begin{verbatim}
+$BAPDIR/pin/pin -t  \
+ $BAPDIR/pintraces/obj-ia32/gentrace.so -taint-files readme \
+ -- $BAPDIR/pintraces/examples/bof1/bof1
+\end{verbatim}
+
+The PIN tool will output
+many debugging messages; this is normal.  If the trace tool detected
+the buffer overflow, it will print ``stack smashing detected'' near
+the end of the logs.  At this point, there should be a trace file
+ending with suffix bpt in the current working directory.  In the
+following commands, we assume this file is named trace.bpt.
+
+To lift the trace data and print it, run 
+
+\begin{verbatim}
+iltrans -serializedtrace trace.bpt -pp-ast /dev/stdout
+\end{verbatim}
+
+It is also possible to concretize the trace, which removes jumps and performs
+memory concretization, by executing 
+
+\begin{verbatim}
+iltrans -serializedtrace trace.bpt -trace-concrete -pp-ast /dev/stdout
+\end{verbatim}
+
+Adding the -trace-check option before -trace-concrete causes BAP to compare its
+internal evaluator's notion of state with the actual values recorded in the
+trace.  It can be used to check for bugs in the IL.  Finally, running 
+
+\begin{verbatim}
+iltrans -serializedtrace trace.bpt -trace-formula f
+\end{verbatim}
+
+will symbolically execute the trace and output the generated verification
+condtion to the file f. This can then be solved with stp to find satisfying
+answers to the trace.

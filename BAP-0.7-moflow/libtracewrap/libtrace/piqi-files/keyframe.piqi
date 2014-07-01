@@ -1,0 +1,93 @@
+.include [
+         .module types
+]
+
+% Key frame.  Used to periodically store value information to
+% ensure consistency.
+.record [
+        .name key-frame
+
+        % List of tagged-value-lists.  Each value-list is tagged with an
+        % optional thread-id, which represents the thread from which any
+        % value register values are from.
+        .field [
+               .type tagged-value-lists
+               .code 1
+        ]
+]
+
+% Tagged value lists
+.list [
+      .name tagged-value-lists
+      .type tagged-value-list
+]
+
+% Tagged value list
+.record [
+        .name tagged-value-list
+
+        % Tag
+        .field [
+               .name value-source-tag
+               .type value-source-tag
+               .code 1
+        ]
+
+        % The value list
+        .field [
+               .type value-list
+               .code 2
+        ]
+]
+
+% Value source tag
+.variant [
+         .name value-source-tag
+
+         .option [
+                 .name no-thread-id
+                 .code 1
+         ]
+
+         .option [
+                 .type thread-id
+                 .code 2
+         ]
+]
+
+% Value list
+.list [
+      .name value-list
+      .type value-info
+]
+
+% Value (a subset of operand)
+.record [
+        .name value-info
+
+        % Mem/register specific stuff
+        .field [
+               .type operand-info-specific
+               .code 1
+        ]
+
+        % Size in bits
+        .field [
+               .type bit-length
+               .code 2
+        ]
+
+        % Taint information (optional)
+        .field [
+               .type taint-info
+               .optional
+               .code 3
+        ]
+
+        % Value
+        .field [
+               .name value
+               .type binary
+               .code 4
+        ]
+]

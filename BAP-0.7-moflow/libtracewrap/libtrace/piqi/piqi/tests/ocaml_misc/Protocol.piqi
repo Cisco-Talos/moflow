@@ -1,0 +1,13 @@
+.ocaml-module "Protocol"
+
+.import [ .module Ad ]
+
+.variant [
+    .name op
+    .option [ .name ping ]
+    .option [
+        .name get-balance
+        .type Ad/id
+    ]
+]
+
