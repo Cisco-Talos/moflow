@@ -111,7 +111,7 @@ let quick_exp_eq e1 e2 =
     let b6 = List.for_all2 (==) l6 r6 in
     let b7 = List.for_all2 (==) l7 r7 in
     let b8 = List.for_all2 (==) l8 r8 in
-    if b1 & b2 & b3 & b4 & b5 & b6 & b7 & b8 then
+    if b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8 then
       true else false
 
 (** full_exp_eq e1 e2 returns true if and only if e1 and e2 are
@@ -173,9 +173,9 @@ let quick_stmt_eq s1 s2 =
     let b4 = List.for_all2 (==) l4 r4 in
     let b5 = List.for_all2 (==) l5 r5 in
     let b6 = List.for_all2 (==) l6 r6 in
-    if b1 & b2 & b3 & b4 & b5 & b6 then
+    if b1 && b2 && b3 && b4 && b5 && b6 then
       true
-    else if b1 & b2 & b3 & b4 & b5 then
+    else if b1 && b2 && b3 && b4 && b5 then
       (* s1 and s2 are not physically equal.  But maybe their
 	 subexpressions are physically equal. *)
       List.for_all2 quick_exp_eq l6 r6

@@ -57,7 +57,7 @@ end
 let pin_stream_trace_test solver pin_out =
   skip_if (not (solver#in_path ())) (solver#solvername ^ " not on path");
   let open Traces.TraceSymbolicStream in
-  let stream = Asmir.serialized_bap_stream_from_trace_file !Input.streamrate pin_out in
+  let (close, stream) = Asmir.serialized_bap_stream_from_trace_file !Input.streamrate pin_out in
   let streamf, finalf = Traces_stream.generate_formula formula_storage solver in
   Stream.iter streamf stream;
   finalf ();

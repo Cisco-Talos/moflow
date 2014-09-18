@@ -21,7 +21,7 @@ CFLAGS=-Wall -m32
 OCAMLOPT=ocamlopt
 OCAMLDEP=ocamldep
 INCLUDES=$(foreach d, $(INC), -I $d)
-OCAMLFLAGS=$(INCLUDES)  -g   -ccopt -rdynamic -ccopt -L$(BAP_LIB_DIR) -ccopt -L$(LIBASMIR)
+OCAMLFLAGS=$(INCLUDES)  -g   -ccopt -rdynamic -ccopt -lrt -ccopt -L$(BAP_LIB_DIR) -ccopt -L$(LIBASMIR)
 OCAMLOPTFLAGS=$(INCLUDES) # add other options for ocamlopt here
 
 SLICER_OBJS=common.cmo slicer.cmo

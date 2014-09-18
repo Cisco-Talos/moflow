@@ -21,7 +21,7 @@ CFLAGS=-Wall -m32
 OCAMLOPT=ocamlopt
 OCAMLDEP=ocamldep
 INCLUDES=$(foreach d, $(INC), -I $d)
-OCAMLFLAGS=$(INCLUDES)  -g   -ccopt -rdynamic -ccopt -L$(BAP_LIB_DIR) -ccopt -L$(LIBASMIR) -thread
+OCAMLFLAGS=$(INCLUDES)  -g   -ccopt -rdynamic -ccopt -lrt -ccopt -L$(BAP_LIB_DIR) -ccopt -L$(LIBASMIR) -thread
 OCAMLOPTFLAGS=$(INCLUDES) # add other options for ocamlopt here
 
 egas_OBJS=stats.cmo heap.cmo common.cmo export.cmo branches.cmo space.cmo mylazy.cmo oracle.cmo apps.cmo egas.cmo 
