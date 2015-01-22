@@ -5,7 +5,7 @@ module Cm = Common
 (* We can have only 1 child at any moment. *)
 let cHILD_PID = ref None
 
-let bAP_DIR = "/home/p/bap-0.7" 
+let bAP_DIR = "../.." 
 (* file to taint, trace filename, app, params.
  * params:string array*)
 let make_pin_cmd sample_fn trace_fn app params = 

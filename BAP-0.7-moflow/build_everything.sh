@@ -7,7 +7,7 @@ cd solvers
 cd ..
 ./configure --with-z3=`pwd`/solvers/z3
 (cd ocaml; make clean)
-make
+make -i
 cd pintraces
 ./getpin.sh
 make
