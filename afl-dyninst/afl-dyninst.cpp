@@ -53,6 +53,7 @@ bool parseOptions(int argc, char **argv)
             break;
         case 'i':
             originalBinary = optarg;
+            instrumentLibraries.insert(optarg);
             break;
         case 'o':
             instrumentedBinary = optarg;
@@ -248,7 +249,17 @@ int main (int argc, char **argv)
     vector < BPatch_module * >*modules = appImage->getModules ();
     vector < BPatch_module * >::iterator moduleIter;
     BPatch_module *defaultModule = NULL;
-
+    string defaultModuleName;
+    for (moduleIter = modules->begin (); moduleIter != modules->end (); ++moduleIter) {
+    //find default module name
+        char moduleName[1024];
+        (*moduleIter)->getName (moduleName, 1024);    
+        if (string (moduleName).find ("DEFAULT_MODULE") != string::npos) {
+            defaultModuleName = "DEFAULT_MODULE";
+        }
+    }
+    if(defaultModuleName.empty()) 
+        defaultModuleName = string(originalBinary).substr(string(originalBinary).find_last_of("\\/")+1);
     int bbIndex = 0;
     for (moduleIter = modules->begin (); moduleIter != modules->end (); ++moduleIter) {
         char moduleName[1024];
@@ -261,7 +272,7 @@ int main (int argc, char **argv)
             }
         }
 
-        if (string (moduleName).find ("DEFAULT_MODULE") != string::npos) {
+        if (string (moduleName).find (defaultModuleName) != string::npos) {
             defaultModule = (*moduleIter);
             if(skipMainModule) continue;
         }
