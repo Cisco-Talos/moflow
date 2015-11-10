@@ -16,7 +16,7 @@ let cfg_jumpelim graph =
 	let laststmt = List.hd revstmts in
 	match laststmt with
 	| CJmp(cond, l1, l2, attr)
-	    when full_value_eq cond val_true or full_value_eq cond val_false ->
+	    when full_value_eq cond val_true || full_value_eq cond val_false ->
           (try
 	    let (l1, l2) = if full_value_eq cond val_true
 	      then (l1, l2) else (l2, l1) in

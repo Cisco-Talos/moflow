@@ -37,7 +37,7 @@ export INCDIRS = $(BAP_OCAMLDIR) $(BAP_OCAMLDIR)/piqi $(BIGINT) $(BATT) $(OUNIT)
 export OCAMLPATH = $(PIQIBUILDDIR)
 
 # -rdynamic lets LLVM JIT see dynamic symbols
-export LDFLAGS = -rdynamic
+export LDFLAGS = -rdynamic -lrt
 
 # Include sources from ../ocaml in the automatically generated dependencies.
 export SOURCE_DIRS_IN = $(BAP_OCAMLDIR) $(BAP_PROJ_OCAMLDIR)

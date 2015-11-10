@@ -159,8 +159,10 @@ void EmitRegisters(FILE *f, const CONTEXT *ctx, context &delta){
   int i, sz;
   //XXX: if you change order of these ids, you also need to change numbering
   //in motriage.ml, function: rid2reg
-  REG regs[] = {REG_EAX, REG_EBX, REG_ECX, REG_EDX, REG_ESI, REG_EDI, REG_EBP,
-              REG_ESP, REG_EFLAGS, REG_EIP};
+  REG regs[] = {LEVEL_BASE::REG_EAX, LEVEL_BASE::REG_EBX, LEVEL_BASE::REG_ECX,
+              LEVEL_BASE::REG_EDX, LEVEL_BASE::REG_ESI, LEVEL_BASE::REG_EDI, LEVEL_BASE::REG_EBP,
+              LEVEL_BASE::REG_ESP, LEVEL_BASE::REG_EFLAGS, LEVEL_BASE::REG_EIP};
+
   context::iterator it;
 
   sz = sizeof(regs)/sizeof(regs[0]);
